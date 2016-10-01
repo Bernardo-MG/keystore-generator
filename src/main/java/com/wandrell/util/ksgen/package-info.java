@@ -28,12 +28,11 @@
  * project.
  * <p>
  * This can be done by using the
- * {@link com.wandrell.example.swss.security.KeystoreGenerator
- * KeystoreGenerator} runnable class, which will overwrite the existing key
- * stores.
+ * {@link com.wandrell.util.ksgen.KeystoreGenerator KeystoreGenerator} runnable
+ * class, which will overwrite the existing key stores.
  * <p>
  * The actual keystore creation is taken care by the
- * {@link com.wandrell.example.swss.security.KeystoreFactory KeystoreFactory}.
+ * {@link com.wandrell.util.ksgen.KeystoreFactory KeystoreFactory}.
  */
 
 package com.wandrell.util.ksgen;

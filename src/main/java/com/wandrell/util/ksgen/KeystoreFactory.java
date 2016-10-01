@@ -77,8 +77,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Factory for generating key stores.
  * <p>
- * This is meant for the
- * {@link com.wandrell.example.swss.security.KeystoreGenerator
+ * This is meant for the {@link com.wandrell.util.ksgen.KeystoreGenerator
  * KeystoreGenerator}.
  *
  * @author Bernardo Martínez Garrido
