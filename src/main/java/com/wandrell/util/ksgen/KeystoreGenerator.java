@@ -87,7 +87,7 @@ public final class KeystoreGenerator {
 
         LOGGER.trace("Creating main key store");
 
-        jksMain = KeystoreFactory.getJKSKeystore(password, alias, issuer);
+        jksMain = KeystoreFactory.getJavaKeyStore(password, alias, issuer);
 
         // Saves the main keystore
         saveToFile(jksMain, jksMainPath, password.toCharArray());
@@ -98,7 +98,7 @@ public final class KeystoreGenerator {
 
         LOGGER.trace("Creating second key store");
 
-        jksSecond = KeystoreFactory.getJKSKeystore(password, alias, issuer);
+        jksSecond = KeystoreFactory.getJavaKeyStore(password, alias, issuer);
 
         // Saves the second keystore
         saveToFile(jksSecond, jksSecondPath, password.toCharArray());
@@ -109,7 +109,8 @@ public final class KeystoreGenerator {
 
         LOGGER.trace("Creating symmetric key store");
 
-        jceksSym = KeystoreFactory.getJCEKSKeystore(password, alias);
+        jceksSym = KeystoreFactory
+                .getJavaCryptographicExtensionKeyStore(password, alias);
 
         // Saves the symmetric keystore
         saveToFile(jceksSym, jceksSymPath, password.toCharArray());

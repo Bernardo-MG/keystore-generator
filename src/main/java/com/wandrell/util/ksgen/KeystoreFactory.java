@@ -103,8 +103,8 @@ public final class KeystoreFactory {
      * @throws Exception
      *             if any error occurs during the key store creation
      */
-    public static final KeyStore getJCEKSKeystore(final String password,
-            final String alias) throws Exception {
+    public static final KeyStore getJavaCryptographicExtensionKeyStore(
+            final String password, final String alias) throws Exception {
         final KeyStore kstore; // Generated key store
 
         kstore = getKeystore(password, "JCEKS");
@@ -126,7 +126,7 @@ public final class KeystoreFactory {
      * @throws Exception
      *             if any error occurs during the key store creation
      */
-    public static final KeyStore getJKSKeystore(final String password,
+    public static final KeyStore getJavaKeyStore(final String password,
             final String alias, final String issuer) throws Exception {
         final KeyStore kstore; // Generated key store
 
