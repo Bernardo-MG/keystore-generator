@@ -2,9 +2,6 @@
 
 Keystore generator to be used for testing purposes. It generates a basic Java keystore.
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.wandrell.util/keystore-generator.svg)][maven-repo]
-[![Bintray](https://api.bintray.com/packages/bernardo-mg/maven/keystore-generator/images/download.svg)][bintray-repo]
-
 [![Release docs](https://img.shields.io/badge/docs-release-blue.svg)][site-release]
 [![Development docs](https://img.shields.io/badge/docs-develop-blue.svg)][site-develop]
 
@@ -40,7 +37,7 @@ The verify phase is required, otherwise some of the reports won't be generated.
 
 The application is coded in Java, using Maven to manage the project.
 
-It is a Java library, meant to be included as a dependency on any project which may want to make use of it.
+A java runnable class, KeystoreGenerator, allows making use of the project.
 
 ### Prerequisites
 
@@ -50,16 +47,6 @@ The project has been tested on the following Java versions:
 * OpenJDK 7
 
 All other dependencies are handled through Maven, and noted in the included POM file.
-
-### Installing
-
-The recommended way to install the project is by setting it up as a dependency. To get the configuration information for this check the [Bintray repository][bintray-repo], or the [Maven Central Repository][maven-repo].
-
-It is always possible installing it by using the usual Maven command:
-
-```
-$ mvn install
-```
 
 ## Collaborate
 
@@ -80,8 +67,6 @@ If you wish to fork or modify the code, visit the [GitHub project page][scm], wh
 
 The project has been released under the [MIT License][license].
 
-[bintray-repo]: https://bintray.com/bernardo-mg/maven/keystore-generator/view
-[maven-repo]: http://mvnrepository.com/artifact/com.wandrell.util/keystore-generator
 [issues]: https://github.com/bernardo-mg/keystore-generator/issues
 [javadoc-develop]: http://docs.wandrell.com/development/maven/keystore-generator/apidocs
 [javadoc-release]: http://docs.wandrell.com/maven/keystore-generator/apidocs
