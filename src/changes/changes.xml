@@ -5,9 +5,9 @@
         <author email="programming@wandrell.com">Bernardo Martínez Garrido</author>
     </properties>
     <body>
-        <release version="0.1.0" date="2016-08-26" description="First release">
+        <release version="1.0.0" date="2016-10-02" description="First release">
             <action dev="bmg" type="update">
-                First release of the library.
+                First release of the project.
             </action>
         </release>
     </body>
