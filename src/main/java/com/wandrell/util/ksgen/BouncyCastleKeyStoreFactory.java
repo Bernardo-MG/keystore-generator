@@ -128,6 +128,15 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
     }
 
     /**
+     * Returns the current date.
+     * 
+     * @return the current date
+     */
+    private final Date getCurrentDate() {
+        return new Date();
+    }
+
+    /**
      * Returns a {@code Certificate} with the received data.
      *
      * @param keypair
@@ -164,15 +173,13 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
         certificate = getSignedCertificate(builder, keypair.getPrivate());
 
-        certificate.checkValidity(new Date());
+        certificate.checkValidity(getCurrentDate());
         certificate.verify(keypair.getPublic());
 
-        LOGGER.debug(String.format(
-                "Created certificate of type %s with encoded value %s",
-                certificate.getType(),
-                Arrays.asList(certificate.getEncoded())));
-        LOGGER.debug(String.format("Created certificate with public key:%n%s",
-                certificate.getPublicKey()));
+        LOGGER.debug("Created certificate of type {} with encoded value {}",
+                certificate.getType(), Arrays.asList(certificate.getEncoded()));
+        LOGGER.debug("Created certificate with public key:{}",
+                certificate.getPublicKey());
 
         return certificate;
     }
@@ -246,12 +253,12 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
         keypair = keyPairGenerator.generateKeyPair();
 
-        LOGGER.debug(String.format(
-                "Created key pair with private key %3$s %1$s and public key %4$s %2$s",
-                Arrays.asList(keypair.getPrivate().getEncoded()),
-                Arrays.asList(keypair.getPublic().getEncoded()),
+        LOGGER.debug(
+                "Created key pair with private key {} {} and public key {} {}",
                 keypair.getPrivate().getAlgorithm(),
-                keypair.getPublic().getAlgorithm()));
+                Arrays.asList(keypair.getPrivate().getEncoded()),
+                keypair.getPublic().getAlgorithm(),
+                Arrays.asList(keypair.getPublic().getEncoded()));
 
         return keypair;
     }
@@ -293,10 +300,10 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         signed = new JcaX509CertificateConverter().setProvider(provider)
                 .getCertificate(builder.build(signer));
 
-        LOGGER.debug(String.format(
-                "Signed certificate with %1$s private key %3$s, using algorithm %2$s",
-                key.getAlgorithm(), key.getFormat(),
-                Arrays.asList(key.getEncoded())));
+        LOGGER.debug(
+                "Signed certificate with {} private key {}, using algorithm {}",
+                key.getAlgorithm(), Arrays.asList(key.getEncoded()),
+                key.getFormat());
 
         return signed;
     }
@@ -320,9 +327,9 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         kstore.setKeyEntry(alias, keypair.getPrivate(), password.toCharArray(),
                 chain);
 
-        LOGGER.debug(String.format(
-                "Added certificate with alias %s and password %s for issuer %s",
-                alias, password, issuer));
+        LOGGER.debug(
+                "Added certificate with alias {} and password {} for issuer {}",
+                alias, password, issuer);
     }
 
     @Override
@@ -336,16 +343,15 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         key = new byte[] { 1, 2, 3, 4, 5 };
         secretKey = new SecretKeySpec(key, "DES");
 
-        LOGGER.debug(String.format("Created secret key %s with format %s",
-                Arrays.asList(secretKey.getEncoded()), secretKey.getFormat()));
+        LOGGER.debug("Created secret key {} with format {}",
+                Arrays.asList(secretKey.getEncoded()), secretKey.getFormat());
 
         secretKeyEntry = new SecretKeyEntry(secretKey);
         keyPassword = new PasswordProtection(password.toCharArray());
         kstore.setEntry(alias, secretKeyEntry, keyPassword);
 
-        LOGGER.debug(
-                String.format("Added secret key with alias %s and password %s",
-                        alias, password));
+        LOGGER.debug("Added secret key with alias {} and password {}", alias,
+                password);
     }
 
     @Override
@@ -367,8 +373,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         pass = password.toCharArray();
         kstore.load(null, pass);
 
-        LOGGER.debug(String.format("Created %s key store with password %s",
-                type, password));
+        LOGGER.debug("Created {} key store with password {}", type, password);
 
         return kstore;
     }

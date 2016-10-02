@@ -21,11 +21,11 @@
 
     <Loggers>
         <Logger name="com.wandrell" level="debug" additivity="false">
-            <AppenderRef ref="file" />
+            <AppenderRef ref="console" />
         </Logger>
 
         <Root level="error">
-            <AppenderRef ref="file" />
+            <AppenderRef ref="console" />
         </Root>
     </Loggers>
 
