@@ -31,7 +31,7 @@ import java.security.KeyStore;
  *
  * @author Bernardo Martínez Garrido
  */
-public interface KeystoreFactory {
+public interface KeyStoreFactory {
 
     /**
      * Creates a Java Cryptographic Extension Key Store (JCEKS), which will

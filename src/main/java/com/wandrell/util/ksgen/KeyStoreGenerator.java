@@ -46,13 +46,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bernardo Martínez Garrido
  */
-public final class KeystoreGenerator {
+public final class KeyStoreGenerator {
 
     /**
      * The logger used for logging the key store creation.
      */
     private static final Logger LOGGER = LoggerFactory
-            .getLogger(KeystoreGenerator.class);
+            .getLogger(KeyStoreGenerator.class);
 
     /**
      * Runs the generator and creates a new set of key stores.
@@ -72,9 +72,9 @@ public final class KeystoreGenerator {
         final String password;         // Password to apply to the key stores
         final String alias;            // Alias for the certificate
         final String issuer;           // Issuer for the certificate
-        final KeystoreFactory factory; // KS factory
+        final KeyStoreFactory factory; // KS factory
 
-        factory = new DefaultKeystoreFactory();
+        factory = new DefaultKeyStoreFactory();
 
         jksMainPath = "src/main/resources/keystore.jks";
         jksSecondPath = "src/main/resources/keystore2.jks";
@@ -159,7 +159,7 @@ public final class KeystoreGenerator {
     /**
      * Private constructor to avoid initialization.
      */
-    private KeystoreGenerator() {
+    private KeyStoreGenerator() {
         super();
     }
 

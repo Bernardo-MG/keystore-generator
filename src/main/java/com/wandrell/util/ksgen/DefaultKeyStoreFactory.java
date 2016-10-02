@@ -79,18 +79,18 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bernardo Martínez Garrido
  */
-public final class DefaultKeystoreFactory implements KeystoreFactory {
+public final class DefaultKeyStoreFactory implements KeyStoreFactory {
 
     /**
      * The logger used for logging the key store creation.
      */
     private static final Logger LOGGER = LoggerFactory
-            .getLogger(DefaultKeystoreFactory.class);
+            .getLogger(DefaultKeyStoreFactory.class);
 
     /**
      * Default constructor.
      */
-    public DefaultKeystoreFactory() {
+    public DefaultKeyStoreFactory() {
         super();
     }
 
