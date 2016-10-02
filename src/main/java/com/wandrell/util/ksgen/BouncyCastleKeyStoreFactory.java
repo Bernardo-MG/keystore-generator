@@ -291,7 +291,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         yearDays = 365;
         years = 100;
 
-        return new Date(System.currentTimeMillis() - msDay * yearDays * years);
+        return new Date(System.currentTimeMillis() + msDay * yearDays * years);
     }
 
     /**
