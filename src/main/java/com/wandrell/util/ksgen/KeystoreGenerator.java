@@ -73,9 +73,9 @@ public final class KeystoreGenerator {
         final String alias;         // Alias for the certificate
         final String issuer;        // Issuer for the certificate
 
-        jksMainPath = "src/main/resources/keystore/keystore.jks";
-        jksSecondPath = "src/main/resources/keystore/keystore2.jks";
-        jceksSymPath = "src/main/resources/keystore/symmetric.jceks";
+        jksMainPath = "src/main/resources/keystore.jks";
+        jksSecondPath = "src/main/resources/keystore2.jks";
+        jceksSymPath = "src/main/resources/symmetric.jceks";
 
         password = "123456";
         alias = "swss-cert";
