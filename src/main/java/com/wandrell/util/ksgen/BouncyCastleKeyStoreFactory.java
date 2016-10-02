@@ -88,6 +88,13 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
             .getLogger(BouncyCastleKeyStoreFactory.class);
 
     /**
+     * Random values generator.
+     * <p>
+     * To be used whenever a new random value is required.
+     */
+    private final Random        random = new Random();
+
+    /**
      * Default constructor.
      */
     public BouncyCastleKeyStoreFactory() {
@@ -194,7 +201,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
         issuerName = new X500Name(issuer);
         subjectName = issuerName;
-        serial = BigInteger.valueOf(new Random().nextInt());
+        serial = BigInteger.valueOf(getRandom().nextInt());
 
         start = new Date(System.currentTimeMillis() - 86400000L * 365);
         end = new Date(System.currentTimeMillis() + 86400000L * 365 * 100);
@@ -247,6 +254,15 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
                 keypair.getPublic().getAlgorithm()));
 
         return keypair;
+    }
+
+    /**
+     * Returns the random values generator.
+     * 
+     * @return the random values generator
+     */
+    private final Random getRandom() {
+        return random;
     }
 
     /**
