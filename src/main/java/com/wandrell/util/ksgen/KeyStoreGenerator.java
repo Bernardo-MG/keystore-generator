@@ -103,7 +103,7 @@ public final class KeyStoreGenerator {
 
         jksSecond = factory.getJavaKeyStore(password, alias, issuer);
 
-        // Saves the second keystore
+        // Saves the second key store
         saveToFile(jksSecond, jksSecondPath, password.toCharArray());
 
         LOGGER.trace("Created second key store");
@@ -115,7 +115,7 @@ public final class KeyStoreGenerator {
         jceksSym = factory.getJavaCryptographicExtensionKeyStore(password,
                 alias);
 
-        // Saves the symmetric keystore
+        // Saves the symmetric key store
         saveToFile(jceksSym, jceksSymPath, password.toCharArray());
 
         LOGGER.trace("Created symmetric key store");
@@ -138,7 +138,7 @@ public final class KeyStoreGenerator {
      *             if the appropriate data integrity algorithm could not be
      *             found
      * @throws CertificateException
-     *             if any of the certificates included in the keystore data
+     *             if any of the certificates included in the key store data
      *             could not be stored
      * @throws IOException
      *             if an I/O error occurs
@@ -146,7 +146,7 @@ public final class KeyStoreGenerator {
     private static final void saveToFile(final KeyStore keyStore,
             final String path, final char[] password) throws KeyStoreException,
             NoSuchAlgorithmException, CertificateException, IOException {
-        FileOutputStream output = null; // Output stream for the keystore
+        FileOutputStream output = null; // Output stream for the key store
 
         try {
             output = new FileOutputStream(path);
