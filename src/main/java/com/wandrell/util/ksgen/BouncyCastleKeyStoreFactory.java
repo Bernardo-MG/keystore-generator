@@ -75,22 +75,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Default factory for generating key stores.
+ * Bouncy Castle based factory for generating key stores.
  *
  * @author Bernardo Martínez Garrido
  */
-public final class DefaultKeyStoreFactory extends AbstractKeyStoreFactory {
+public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
     /**
      * The logger used for logging the key store creation.
      */
     private static final Logger LOGGER = LoggerFactory
-            .getLogger(DefaultKeyStoreFactory.class);
+            .getLogger(BouncyCastleKeyStoreFactory.class);
 
     /**
      * Default constructor.
      */
-    public DefaultKeyStoreFactory() {
+    public BouncyCastleKeyStoreFactory() {
         super();
     }
 

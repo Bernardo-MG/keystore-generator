@@ -74,7 +74,7 @@ public final class KeyStoreGenerator {
         final String issuer;           // Issuer for the certificate
         final KeyStoreFactory factory; // KS factory
 
-        factory = new DefaultKeyStoreFactory();
+        factory = new BouncyCastleKeyStoreFactory();
 
         jksMainPath = "src/main/resources/keystore.jks";
         jksSecondPath = "src/main/resources/keystore2.jks";

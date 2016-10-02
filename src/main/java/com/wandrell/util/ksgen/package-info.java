@@ -32,7 +32,7 @@
  * class, which will overwrite the existing key stores.
  * <p>
  * The actual keystore creation is taken care by the
- * {@link com.wandrell.util.ksgen.DefaultKeyStoreFactory KeystoreFactory}.
+ * {@link com.wandrell.util.ksgen.BouncyCastleKeyStoreFactory KeystoreFactory}.
  */
 
 package com.wandrell.util.ksgen;
