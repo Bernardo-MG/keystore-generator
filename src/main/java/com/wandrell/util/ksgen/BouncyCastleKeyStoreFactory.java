@@ -84,7 +84,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
     /**
      * The logger used for logging the key store creation.
      */
-    private static final Logger LOGGER = LoggerFactory
+    private static final Logger LOGGER             = LoggerFactory
             .getLogger(BouncyCastleKeyStoreFactory.class);
 
     /**
@@ -92,17 +92,17 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
      * <p>
      * To be used whenever a new random value is required.
      */
-    private final Random        random = new Random();
+    private final Random        random             = new Random();
 
     /**
      * The algorithm to be used for the secret key.
      */
-    private final String secretKeyAlgorithm = "DES";
+    private final String        secretKeyAlgorithm = "DES";
 
     /**
      * The algorith to use for the signature.
      */
-    private final String signatureAlgorithm = "SHA256WithRSAEncryption";
+    private final String        signatureAlgorithm = "SHA256WithRSAEncryption";
 
     /**
      * Default constructor.

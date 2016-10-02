@@ -24,6 +24,8 @@
 
 package com.wandrell.util.ksgen;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.security.KeyStore;
 
 /**
@@ -45,6 +47,9 @@ public abstract class AbstractKeyStoreFactory implements KeyStoreFactory {
             final String password, final String alias) throws Exception {
         final KeyStore kstore; // Generated key store
 
+        checkNotNull(password, "Received a null pointer as password");
+        checkNotNull(alias, "Received a null pointer as alias");
+
         kstore = getKeystore(password, "JCEKS");
         addSecretKey(kstore, alias, password);
 
@@ -55,6 +60,10 @@ public abstract class AbstractKeyStoreFactory implements KeyStoreFactory {
     public final KeyStore getJavaKeyStore(final String password,
             final String alias, final String issuer) throws Exception {
         final KeyStore kstore; // Generated key store
+
+        checkNotNull(password, "Received a null pointer as password");
+        checkNotNull(alias, "Received a null pointer as alias");
+        checkNotNull(issuer, "Received a null pointer as issuer");
 
         kstore = getKeystore(password);
         addCertificate(kstore, password, alias, issuer);
