@@ -63,15 +63,18 @@ public final class KeystoreGenerator {
      *             if any problem occurs while generating the key stores
      */
     public static final void main(final String[] args) throws Exception {
-        final KeyStore jksMain;     // Main key store
-        final KeyStore jksSecond;   // Second key store
-        final KeyStore jceksSym;    // Symmetric key store
-        final String jksMainPath;   // Path for the main key store
-        final String jksSecondPath; // Path for the second key store
-        final String jceksSymPath;  // Path for the symmetric key store
-        final String password;      // Password to apply to the key stores
-        final String alias;         // Alias for the certificate
-        final String issuer;        // Issuer for the certificate
+        final KeyStore jksMain;        // Main key store
+        final KeyStore jksSecond;      // Second key store
+        final KeyStore jceksSym;       // Symmetric key store
+        final String jksMainPath;      // Path for the main key store
+        final String jksSecondPath;    // Path for the second key store
+        final String jceksSymPath;     // Path for the symmetric key store
+        final String password;         // Password to apply to the key stores
+        final String alias;            // Alias for the certificate
+        final String issuer;           // Issuer for the certificate
+        final KeystoreFactory factory; // KS factory
+
+        factory = new DefaultKeystoreFactory();
 
         jksMainPath = "src/main/resources/keystore.jks";
         jksSecondPath = "src/main/resources/keystore2.jks";
@@ -87,7 +90,7 @@ public final class KeystoreGenerator {
 
         LOGGER.trace("Creating main key store");
 
-        jksMain = KeystoreFactory.getJavaKeyStore(password, alias, issuer);
+        jksMain = factory.getJavaKeyStore(password, alias, issuer);
 
         // Saves the main keystore
         saveToFile(jksMain, jksMainPath, password.toCharArray());
@@ -98,7 +101,7 @@ public final class KeystoreGenerator {
 
         LOGGER.trace("Creating second key store");
 
-        jksSecond = KeystoreFactory.getJavaKeyStore(password, alias, issuer);
+        jksSecond = factory.getJavaKeyStore(password, alias, issuer);
 
         // Saves the second keystore
         saveToFile(jksSecond, jksSecondPath, password.toCharArray());
@@ -109,8 +112,8 @@ public final class KeystoreGenerator {
 
         LOGGER.trace("Creating symmetric key store");
 
-        jceksSym = KeystoreFactory
-                .getJavaCryptographicExtensionKeyStore(password, alias);
+        jceksSym = factory.getJavaCryptographicExtensionKeyStore(password,
+                alias);
 
         // Saves the symmetric keystore
         saveToFile(jceksSym, jceksSymPath, password.toCharArray());
