@@ -95,6 +95,16 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
     private final Random        random = new Random();
 
     /**
+     * The algorithm to be used for the secret key.
+     */
+    private final String secretKeyAlgorithm = "DES";
+
+    /**
+     * The algorith to use for the signature.
+     */
+    private final String signatureAlgorithm = "SHA256WithRSAEncryption";
+
+    /**
      * Default constructor.
      */
     public BouncyCastleKeyStoreFactory() {
@@ -125,15 +135,6 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
         return new BcX509ExtensionUtils()
                 .createSubjectKeyIdentifier(new SubjectPublicKeyInfo(seq));
-    }
-
-    /**
-     * Returns the current date.
-     * 
-     * @return the current date
-     */
-    private final Date getCurrentDate() {
-        return new Date();
     }
 
     /**
@@ -169,10 +170,13 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         final X509v3CertificateBuilder builder; // Certificate builder
         final X509Certificate certificate;      // Certificate
 
+        // Generates the certificate builder
         builder = getCertificateBuilder(keypair.getPublic(), issuer);
 
+        // Generates the signed certificate
         certificate = getSignedCertificate(builder, keypair.getPrivate());
 
+        // Verifies the certificate
         certificate.checkValidity(getCurrentDate());
         certificate.verify(keypair.getPublic());
 
@@ -210,8 +214,9 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         subjectName = issuerName;
         serial = BigInteger.valueOf(getRandom().nextInt());
 
-        start = new Date(System.currentTimeMillis() - 86400000L * 365);
-        end = new Date(System.currentTimeMillis() + 86400000L * 365 * 100);
+        // Dates for the certificate
+        start = getOneYearBackDate();
+        end = getOneHundredYearsFutureDate();
 
         builder = new JcaX509v3CertificateBuilder(issuerName, serial, start,
                 end, subjectName, publicKey);
@@ -235,6 +240,15 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
         return builder;
 
+    }
+
+    /**
+     * Returns the current date.
+     * 
+     * @return the current date
+     */
+    private final Date getCurrentDate() {
+        return new Date();
     }
 
     /**
@@ -264,12 +278,74 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
     }
 
     /**
+     * Returns a date for this day one hundred years in the future.
+     * 
+     * @return a date one hundred years in the future
+     */
+    private final Date getOneHundredYearsFutureDate() {
+        final Long msDay;       // Milliseconds in a day
+        final Integer yearDays; // Days in a year
+        final Integer years;    // Number of years
+
+        msDay = 86400000L;
+        yearDays = 365;
+        years = 100;
+
+        return new Date(System.currentTimeMillis() - msDay * yearDays * years);
+    }
+
+    /**
+     * Returns a date for this day the previous year.
+     * 
+     * @return a date one year back
+     */
+    private final Date getOneYearBackDate() {
+        final Long msDay;       // Milliseconds in a day
+        final Integer yearDays; // Days in a year
+
+        msDay = 86400000L;
+        yearDays = 365;
+
+        return new Date(System.currentTimeMillis() - msDay * yearDays);
+    }
+
+    /**
+     * Returns the password as a byte array.
+     * 
+     * @param password
+     *            the password to transform into a byte array
+     * @return the password as a byte array
+     */
+    private final byte[] getPasswordArray(final String password) {
+        // TODO: This always returns the same value
+        return new byte[] { 1, 2, 3, 4, 5 };
+    }
+
+    /**
      * Returns the random values generator.
      * 
      * @return the random values generator
      */
     private final Random getRandom() {
         return random;
+    }
+
+    /**
+     * Returns the algorithm to be used for the secret key.
+     * 
+     * @return the algorithm to be used for the secret key
+     */
+    private final String getSecretKeyAlgorithm() {
+        return secretKeyAlgorithm;
+    }
+
+    /**
+     * Returns the algorithm to use for the signature.
+     * 
+     * @return
+     */
+    private final String getSignatureAlgorithm() {
+        return signatureAlgorithm;
     }
 
     /**
@@ -294,7 +370,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         final X509Certificate signed; // Signed certificate
 
         provider = BouncyCastleProvider.PROVIDER_NAME;
-        signer = new JcaContentSignerBuilder("SHA256WithRSAEncryption")
+        signer = new JcaContentSignerBuilder(getSignatureAlgorithm())
                 .setProvider(provider).build(key);
 
         signed = new JcaX509CertificateConverter().setProvider(provider)
@@ -319,11 +395,16 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         final Certificate certificate;  // Generated certificate
         final Certificate[] chain;      // Certificate chain
 
+        // Creates a key pair
         keypair = getKeyPair();
+
+        // Creates a certificate
         certificate = getCertificate(keypair, issuer);
 
+        // Creates the certificates chain
         chain = new Certificate[] { certificate };
 
+        // Sets the key data into the key store
         kstore.setKeyEntry(alias, keypair.getPrivate(), password.toCharArray(),
                 chain);
 
@@ -340,8 +421,8 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         final SecretKey secretKey;            // Secret key password
         final byte[] key;                     // Secret key as array
 
-        key = new byte[] { 1, 2, 3, 4, 5 };
-        secretKey = new SecretKeySpec(key, "DES");
+        key = getPasswordArray(password);
+        secretKey = new SecretKeySpec(key, getSecretKeyAlgorithm());
 
         LOGGER.debug("Created secret key {} with format {}",
                 Arrays.asList(secretKey.getEncoded()), secretKey.getFormat());
