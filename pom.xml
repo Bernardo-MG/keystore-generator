@@ -202,7 +202,7 @@
       <slf4j.version>1.7.21</slf4j.version>
       <testng.version>6.10</testng.version>
       <!-- Plugins versions -->
-      <plugin.changes.version>2.12</plugin.changes.version>
+      <plugin.changes.version>2.12.1</plugin.changes.version>
       <!-- Maven Site -->
       <site.skin.version>0.5.0</site.skin.version>
       <bintrayURL>https://bintray.com/bernardo-mg/maven/keystore-generator/view</bintrayURL>
