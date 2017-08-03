@@ -10,5 +10,10 @@
                 First release of the project.
             </action>
         </release>
+        <release version="1.0.1" date="2017-08-02" description="Configuration updates">
+            <action dev="bmg" type="update">
+                Configuration updates and corrections.
+            </action>
+        </release>
     </body>
 </document>
