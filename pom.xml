@@ -4,6 +4,10 @@
 
    <modelVersion>4.0.0</modelVersion>
 
+   <prerequisites>
+      <maven>${maven.version}</maven>
+   </prerequisites>
+
    <!-- ********************************************** -->
    <!-- ****************** BASE POM ****************** -->
    <!-- ********************************************** -->
@@ -11,7 +15,7 @@
    <parent>
       <groupId>com.wandrell.maven</groupId>
       <artifactId>base-pom</artifactId>
-      <version>1.0.5</version>
+      <version>1.1.5</version>
    </parent>
 
    <!-- ********************************************** -->
@@ -20,7 +24,7 @@
 
    <groupId>com.wandrell.util</groupId>
    <artifactId>keystore-generator</artifactId>
-   <version>1.0.0</version>
+   <version>1.0.1</version>
    <packaging>jar</packaging>
 
    <name>Keystore Generator</name>
@@ -103,13 +107,6 @@
                      <artifactId>lifecycle-mapping</artifactId>
                      <version>${plugin.lifecycle.version}</version>
                      <configuration>
-                        <!-- Sample fix for plugin executions. -->
-                        <!-- This is to be used in case a Maven plugin gives problems 
-                           in Eclipse -->
-                        <!-- <lifecycleMappingMetadata> <pluginExecutions> <pluginExecution> 
-                           <pluginExecutionFilter> <groupId>org.jacoco</groupId> <artifactId>jacoco-maven-plugin</artifactId> 
-                           <versionRange>[0.5,)</versionRange> <goals> <goal>prepare-agent</goal> </goals> </pluginExecutionFilter> 
-                           <action> <ignore /> </action> </pluginExecution> </pluginExecutions> </lifecycleMappingMetadata> -->
                         <downloadSources>true</downloadSources>
                         <downloadJavadocs>true</downloadJavadocs>
                      </configuration>
@@ -121,7 +118,7 @@
       <profile>
          <!-- Release site deployment profile. -->
          <!-- Sets the site repository to point to the releases repo. -->
-         <id>deploy-site-release</id>
+         <id>deployment-release</id>
          <activation>
             <!-- Active by default so the repository appears in the reports. -->
             <activeByDefault>true</activeByDefault>
@@ -137,7 +134,7 @@
       <profile>
          <!-- Development site deployment profile. -->
          <!-- Sets the site repository to point to the development repo. -->
-         <id>deploy-site-development</id>
+         <id>deployment-development</id>
          <distributionManagement>
             <site>
                <id>site-development</id>
@@ -187,21 +184,24 @@
    <!-- ********************************************** -->
 
    <properties>
-      <!-- Manifest data -->
+      <!-- ============================================== -->
+      <!-- =============== MANIFEST DATA ================ -->
+      <!-- ============================================== -->
       <manifest.name>com/wandrell/util/ksgen</manifest.name>
-      <!-- Dependencies versions -->
-      <bouncycastle.version>1.54</bouncycastle.version>
+      <!-- ============================================== -->
+      <!-- =========== DEPENDENCIES VERSIONS ============ -->
+      <!-- ============================================== -->
+      <bouncycastle.version>1.57</bouncycastle.version>
       <commons.io.version>2.5</commons.io.version>
-      <guava.version>19.0</guava.version>
-      <log4j.version>2.6.2</log4j.version>
+      <guava.version>20.0</guava.version>
+      <log4j.version>2.7</log4j.version>
       <mockito.version>1.10.19</mockito.version>
       <slf4j.version>1.7.21</slf4j.version>
-      <testng.version>6.9.10</testng.version>
-      <!-- Plugins versions -->
-      <plugin.changes.version>2.12</plugin.changes.version>
-      <plugin.site.velocity.version>1.7</plugin.site.velocity.version>
-      <!-- Maven Site -->
-      <site.skin.version>0.4.0</site.skin.version>
+      <testng.version>6.10</testng.version>
+      <!-- ============================================== -->
+      <!-- ================= MAVEN SITE ================= -->
+      <!-- ============================================== -->
+      <site.skin.version>1.0.0</site.skin.version>
       <bintrayURL>https://bintray.com/bernardo-mg/maven/keystore-generator/view</bintrayURL>
       <mavenURL>http://mvnrepository.com/artifact/com.wandrell.util/keystore-generator</mavenURL>
    </properties>
@@ -294,7 +294,6 @@
             <!-- It is set to also validate the changes log file -->
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-changes-plugin</artifactId>
-            <version>${plugin.changes.version}</version>
             <executions>
                <!-- Changes plugin is bound to the pre-site phase -->
                <execution>
@@ -317,18 +316,6 @@
             </executions>
          </plugin>
          <plugin>
-            <!-- Failsafe -->
-            <!-- Runs integration tests -->
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-failsafe-plugin</artifactId>
-            <configuration>
-               <suiteXmlFiles>
-                  <!-- Path to the integration tests suite file -->
-                  <suiteXmlFile>${project.build.testOutputDirectory}/tests_maven_integration_suite.xml</suiteXmlFile>
-               </suiteXmlFiles>
-            </configuration>
-         </plugin>
-         <plugin>
             <!-- Site -->
             <!-- Generates the Maven Site -->
             <groupId>org.apache.maven.plugins</groupId>
@@ -340,25 +327,7 @@
                   <artifactId>docs-maven-skin</artifactId>
                   <version>${site.skin.version}</version>
                </dependency>
-               <dependency>
-                  <!-- Velocity -->
-                  <groupId>org.apache.velocity</groupId>
-                  <artifactId>velocity</artifactId>
-                  <version>${plugin.site.velocity.version}</version>
-               </dependency>
             </dependencies>
-         </plugin>
-         <plugin>
-            <!-- Surefire -->
-            <!-- Runs unit tests -->
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-               <suiteXmlFiles>
-                  <!-- Path to the unit tests suite file -->
-                  <suiteXmlFile>${project.build.testOutputDirectory}/tests_maven_unit_suite.xml</suiteXmlFile>
-               </suiteXmlFiles>
-            </configuration>
          </plugin>
       </plugins>
    </build>
@@ -370,16 +339,6 @@
    <reporting>
       <plugins>
          <plugin>
-            <!-- FindBugs -->
-            <!-- Checks for patterns which are prone to errors -->
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>findbugs-maven-plugin</artifactId>
-            <configuration>
-               <!-- Exclusion patterns -->
-               <excludeFilterFile>${project.basedir}/src/config/findbugs/findbugs-exclude.xml</excludeFilterFile>
-            </configuration>
-         </plugin>
-         <plugin>
             <!-- Checkstyle -->
             <!-- Checks that the source files comply with style standards -->
             <!-- It is using a customized rules file -->
@@ -388,20 +347,6 @@
             <configuration>
                <!-- The customized rules file -->
                <configLocation>${project.basedir}/src/config/checkstyle/checkstyle-rules.xml</configLocation>
-               <!-- Excludes generated code -->
-               <excludes>**/generated/**/*</excludes>
-            </configuration>
-         </plugin>
-         <plugin>
-            <!-- Javadoc -->
-            <!-- Generates the javadocs -->
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <configuration>
-               <sourceFileExcludes>
-                  <!-- Excludes generated code -->
-                  <exclude>**/generated/**/*</exclude>
-               </sourceFileExcludes>
             </configuration>
          </plugin>
          <plugin>
@@ -414,10 +359,6 @@
                   <!-- The customized rules file -->
                   <ruleset>${project.basedir}/src/config/pmd/pmd-rules.xml</ruleset>
                </rulesets>
-               <excludes>
-                  <!-- Excludes generated code -->
-                  <exclude>**/generated/**/*</exclude>
-               </excludes>
             </configuration>
          </plugin>
       </plugins>
