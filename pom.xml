@@ -194,7 +194,7 @@
       <!-- Manifest data -->
       <manifest.name>com/wandrell/util/ksgen</manifest.name>
       <!-- Dependencies versions -->
-      <bouncycastle.version>1.55</bouncycastle.version>
+      <bouncycastle.version>1.57</bouncycastle.version>
       <commons.io.version>2.5</commons.io.version>
       <guava.version>20.0</guava.version>
       <log4j.version>2.7</log4j.version>
