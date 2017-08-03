@@ -15,7 +15,7 @@
    <parent>
       <groupId>com.wandrell.maven</groupId>
       <artifactId>base-pom</artifactId>
-      <version>1.1.0</version>
+      <version>1.1.5</version>
    </parent>
 
    <!-- ********************************************** -->
@@ -204,7 +204,7 @@
       <!-- Plugins versions -->
       <plugin.changes.version>2.12.1</plugin.changes.version>
       <!-- Maven Site -->
-      <site.skin.version>0.5.0</site.skin.version>
+      <site.skin.version>1.0.0</site.skin.version>
       <bintrayURL>https://bintray.com/bernardo-mg/maven/keystore-generator/view</bintrayURL>
       <mavenURL>http://mvnrepository.com/artifact/com.wandrell.util/keystore-generator</mavenURL>
    </properties>
