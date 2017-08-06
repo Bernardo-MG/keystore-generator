@@ -42,7 +42,6 @@ A java runnable class, KeystoreGenerator, allows making use of the project.
 ### Prerequisites
 
 The project has been tested on the following Java versions:
-* JDK 7
 * JDK 8
 * OpenJDK 7
 
