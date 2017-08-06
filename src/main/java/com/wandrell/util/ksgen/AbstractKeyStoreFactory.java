@@ -31,7 +31,7 @@ import java.security.KeyStore;
 /**
  * Base factory for generating key stores.
  *
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  */
 public abstract class AbstractKeyStoreFactory implements KeyStoreFactory {
 

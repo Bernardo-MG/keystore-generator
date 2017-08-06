@@ -29,7 +29,7 @@ import java.security.KeyStore;
 /**
  * Factory for generating key stores.
  *
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  */
 public interface KeyStoreFactory {
 

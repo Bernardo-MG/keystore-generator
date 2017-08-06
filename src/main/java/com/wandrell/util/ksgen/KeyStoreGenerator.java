@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * Otherwise, as long as the ones included in the application work they should
  * be left untouched.
  *
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  */
 public final class KeyStoreGenerator {
 
