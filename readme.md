@@ -67,9 +67,9 @@ If you wish to fork or modify the code, visit the [GitHub project page][scm], wh
 The project has been released under the [MIT License][license].
 
 [issues]: https://github.com/bernardo-mg/keystore-generator/issues
-[javadoc-develop]: http://docs.wandrell.com/development/maven/keystore-generator/apidocs
-[javadoc-release]: http://docs.wandrell.com/maven/keystore-generator/apidocs
+[javadoc-develop]: http://docs.bernardomg.com/development/maven/keystore-generator/apidocs
+[javadoc-release]: http://docs.bernardomg.com/maven/keystore-generator/apidocs
 [license]: http://www.opensource.org/licenses/mit-license.php
 [scm]: https://github.com/bernardo-mg/keystore-generator
-[site-develop]: http://docs.wandrell.com/development/maven/keystore-generator
-[site-release]: http://docs.wandrell.com/maven/keystore-generator
+[site-develop]: http://docs.bernardomg.com/development/maven/keystore-generator
+[site-release]: http://docs.bernardomg.com/maven/keystore-generator

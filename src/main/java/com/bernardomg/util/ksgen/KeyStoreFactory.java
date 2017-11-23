@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.wandrell.util.ksgen;
+package com.bernardomg.util.ksgen;
 
 import java.security.KeyStore;
 
