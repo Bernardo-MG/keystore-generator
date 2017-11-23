@@ -22,14 +22,14 @@
  * SOFTWARE.
  */
 
-package com.wandrell.util.ksgen;
+package com.bernardomg.util.ksgen;
 
 import java.security.KeyStore;
 
 /**
  * Factory for generating key stores.
  *
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  */
 public interface KeyStoreFactory {
 

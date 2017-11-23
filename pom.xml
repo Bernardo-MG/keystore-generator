@@ -13,18 +13,18 @@
    <!-- ********************************************** -->
 
    <parent>
-      <groupId>com.wandrell.maven</groupId>
+      <groupId>com.bernardomg.maven</groupId>
       <artifactId>base-pom</artifactId>
-      <version>1.1.5</version>
+      <version>1.2.0</version>
    </parent>
 
    <!-- ********************************************** -->
    <!-- **************** PROJECT INFO **************** -->
    <!-- ********************************************** -->
 
-   <groupId>com.wandrell.util</groupId>
+   <groupId>com.bernardomg.util</groupId>
    <artifactId>keystore-generator</artifactId>
-   <version>1.0.1</version>
+   <version>1.1.0</version>
    <packaging>jar</packaging>
 
    <name>Keystore Generator</name>
@@ -127,7 +127,8 @@
             <site>
                <id>site</id>
                <name>Project Documentation Site</name>
-               <url>scp://docs.wandrell.com:2222/home1/duenco/www/maven/keystore-generator</url>
+               <!-- The URL should be set externally -->
+               <url>${site.release.url}</url>
             </site>
          </distributionManagement>
       </profile>
@@ -139,7 +140,8 @@
             <site>
                <id>site-development</id>
                <name>Project Development Documentation Site</name>
-               <url>scp://docs.wandrell.com:2222/home1/duenco/www/development/maven/keystore-generator</url>
+               <!-- The URL should be set externally -->
+               <url>${site.develop.url}</url>
             </site>
          </distributionManagement>
       </profile>
@@ -167,7 +169,7 @@
       <developer>
          <id>bmg</id>
          <name>Bernardo Martínez Garrido</name>
-         <email>programming@wandrell.com</email>
+         <email>programming@bernardomg.com</email>
          <url>https://github.com/Bernardo-MG</url>
          <organization>Bernardo Martínez Garrido</organization>
          <organizationUrl>https://github.com/Bernardo-MG</organizationUrl>
@@ -187,7 +189,7 @@
       <!-- ============================================== -->
       <!-- =============== MANIFEST DATA ================ -->
       <!-- ============================================== -->
-      <manifest.name>com/wandrell/util/ksgen</manifest.name>
+      <manifest.name>com/bernardomg/util/ksgen</manifest.name>
       <!-- ============================================== -->
       <!-- =========== DEPENDENCIES VERSIONS ============ -->
       <!-- ============================================== -->
@@ -201,9 +203,9 @@
       <!-- ============================================== -->
       <!-- ================= MAVEN SITE ================= -->
       <!-- ============================================== -->
-      <site.skin.version>1.0.0</site.skin.version>
+      <site.skin.version>1.2.0</site.skin.version>
       <bintrayURL>https://bintray.com/bernardo-mg/maven/keystore-generator/view</bintrayURL>
-      <mavenURL>http://mvnrepository.com/artifact/com.wandrell.util/keystore-generator</mavenURL>
+      <mavenURL>http://mvnrepository.com/artifact/com.bernardomg.util/keystore-generator</mavenURL>
    </properties>
 
    <!-- ********************************************** -->
@@ -323,7 +325,7 @@
             <dependencies>
                <dependency>
                   <!-- Docs Maven Skin -->
-                  <groupId>com.wandrell.maven.skins</groupId>
+                  <groupId>com.bernardomg.maven.skins</groupId>
                   <artifactId>docs-maven-skin</artifactId>
                   <version>${site.skin.version}</version>
                </dependency>

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.wandrell.util.ksgen;
+package com.bernardomg.util.ksgen;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -77,7 +77,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Bouncy Castle based factory for generating key stores.
  *
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  */
 public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 

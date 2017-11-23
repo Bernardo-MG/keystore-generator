@@ -28,11 +28,11 @@
  * project.
  * <p>
  * This can be done by using the
- * {@link com.wandrell.util.ksgen.KeyStoreGenerator KeystoreGenerator} runnable
+ * {@link com.bernardomg.util.ksgen.KeyStoreGenerator KeystoreGenerator} runnable
  * class, which will overwrite the existing key stores.
  * <p>
  * The actual keystore creation is taken care by the
- * {@link com.wandrell.util.ksgen.BouncyCastleKeyStoreFactory KeystoreFactory}.
+ * {@link com.bernardomg.util.ksgen.BouncyCastleKeyStoreFactory KeystoreFactory}.
  */
 
-package com.wandrell.util.ksgen;
+package com.bernardomg.util.ksgen;

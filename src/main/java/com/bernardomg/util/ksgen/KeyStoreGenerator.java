@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.wandrell.util.ksgen;
+package com.bernardomg.util.ksgen;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * Otherwise, as long as the ones included in the application work they should
  * be left untouched.
  *
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  */
 public final class KeyStoreGenerator {
 
@@ -82,7 +82,7 @@ public final class KeyStoreGenerator {
 
         password = "123456";
         alias = "swss-cert";
-        issuer = "CN=www.wandrell.com, O=Wandrell, OU=None, L=London, ST=England, C=UK";
+        issuer = "CN=www.bernardomg.com, O=bernardomg, OU=None, L=London, ST=England, C=UK";
 
         Security.addProvider(new BouncyCastleProvider());
 
