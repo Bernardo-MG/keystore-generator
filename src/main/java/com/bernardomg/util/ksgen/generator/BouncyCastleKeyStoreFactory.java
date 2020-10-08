@@ -51,7 +51,6 @@ import java.util.Random;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.io.IOUtils;
 import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.ASN1Sequence;
@@ -123,14 +122,10 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
     private final SubjectKeyIdentifier createSubjectKeyIdentifier(final Key key)
             throws IOException {
         final ASN1Sequence seq;        // Sequence for the key info
-        ASN1InputStream stream = null; // Stream for reading the key
 
-        try {
-            stream = new ASN1InputStream(
-                    new ByteArrayInputStream(key.getEncoded()));
+        try (final ASN1InputStream stream = new ASN1InputStream(
+                new ByteArrayInputStream(key.getEncoded()))) {
             seq = (ASN1Sequence) stream.readObject();
-        } finally {
-            IOUtils.closeQuietly(stream);
         }
 
         return new BcX509ExtensionUtils()
