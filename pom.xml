@@ -197,11 +197,22 @@
       <commons.io.version>2.8.0</commons.io.version>
       <guava.version>29.0-jre</guava.version>
       <log4j.version>2.13.3</log4j.version>
+      <picocli.version>4.4.0</picocli.version>
       <slf4j.version>1.7.30</slf4j.version>
+      <spring.boot.version>2.3.1.RELEASE</spring.boot.version>
+      <!-- ============================================== -->
+      <!-- ============== PLUGINS VERSIONS ============== -->
+      <!-- ============================================== -->
+      <plugin.spring.boot.version>${spring.boot.version}</plugin.spring.boot.version>
       <!-- ============================================== -->
       <!-- ================= MAVEN SITE ================= -->
       <!-- ============================================== -->
       <site.skin.version>2.0.8</site.skin.version>
+      <!-- ============================================== -->
+      <!-- ================= EXECUTABLE ================= -->
+      <!-- ============================================== -->
+      <main.path>com.bernardomg.util.ksgen.KeyStoreGenerator</main.path>
+      <exec.file.name>keygen</exec.file.name>
    </properties>
 
    <!-- ********************************************** -->
@@ -214,6 +225,12 @@
          <groupId>com.google.guava</groupId>
          <artifactId>guava</artifactId>
          <version>${guava.version}</version>
+      </dependency>
+      <dependency>
+         <!-- picocli -->
+         <groupId>info.picocli</groupId>
+         <artifactId>picocli</artifactId>
+         <version>${picocli.version}</version>
       </dependency>
       <!-- ============================================== -->
       <!-- =============== BOUNCY CASTLE ================ -->
@@ -268,6 +285,16 @@
 
    <build>
       <defaultGoal>clean package install</defaultGoal>
+      <pluginManagement>
+         <plugins>
+            <plugin>
+               <!-- Spring Boot -->
+               <groupId>org.springframework.boot</groupId>
+               <artifactId>spring-boot-maven-plugin</artifactId>
+               <version>${plugin.spring.boot.version}</version>
+            </plugin>
+         </plugins>
+      </pluginManagement>
       <plugins>
          <plugin>
             <!-- Changes -->
@@ -310,6 +337,40 @@
                </dependency>
             </dependencies>
          </plugin>
+         <plugin>
+            <!-- Spring Boot -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <goals>
+                     <goal>repackage</goal>
+                  </goals>
+                  <configuration>
+                     <classifier>spring-boot</classifier>
+                     <mainClass>${main.path}</mainClass>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
+            <!-- Antrun -->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <phase>package</phase>
+                  <configuration>
+                     <target>
+                        <copy file="${project.build.directory}/${project.build.finalName}-spring-boot.jar" tofile="${project.build.directory}/${exec.file.name}.jar" />
+                     </target>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
       </plugins>
    </build>
 
@@ -328,6 +389,16 @@
             <configuration>
                <!-- The customized rules file -->
                <configLocation>${project.basedir}/src/config/checkstyle/checkstyle-rules.xml</configLocation>
+            </configuration>
+         </plugin>
+         <plugin>
+            <!-- FindBugs -->
+            <!-- Checks for patterns which are prone to errors -->
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>findbugs-maven-plugin</artifactId>
+            <configuration>
+               <!-- Exclusion patterns -->
+               <excludeFilterFile>${project.basedir}/src/config/findbugs/findbugs-exclude.xml</excludeFilterFile>
             </configuration>
          </plugin>
          <plugin>

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.bernardomg.util.ksgen;
+package com.bernardomg.util.ksgen.generator;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

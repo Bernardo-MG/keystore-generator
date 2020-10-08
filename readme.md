@@ -2,6 +2,24 @@
 
 Keystore generator to be used for testing purposes. It generates a basic Java keystore.
 
+To run the project first package it:
+
+```
+mvn clean package
+```
+
+Afterwards a runnable jar will be in the target folder. It can be run like this:
+
+```
+java -jar target/keygen.jar
+```
+
+To show additional commands:
+
+```
+java -jar target/keygen.jar -h
+```
+
 [![Release docs](https://img.shields.io/badge/docs-release-blue.svg)][site-release]
 [![Development docs](https://img.shields.io/badge/docs-develop-blue.svg)][site-develop]
 
@@ -10,6 +28,7 @@ Keystore generator to be used for testing purposes. It generates a basic Java ke
 
 ## Features
 
+- Command Line Interface
 - Generates JKS stores
 - Generates symmetric JKS stores
 

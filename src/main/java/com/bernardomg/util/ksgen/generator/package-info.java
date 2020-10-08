@@ -22,7 +22,17 @@
  * SOFTWARE.
  */
 /**
- * Key store generator.
+ * Factories for generating key stores.
+ * <p>
+ * These classes are to be used only when fresh key stores are required for the
+ * project.
+ * <p>
+ * This can be done by using the
+ * {@link com.bernardomg.util.ksgen.generator.KeyStoreGenerator KeystoreGenerator} runnable
+ * class, which will overwrite the existing key stores.
+ * <p>
+ * The actual keystore creation is taken care by the
+ * {@link com.bernardomg.util.ksgen.generator.BouncyCastleKeyStoreFactory KeystoreFactory}.
  */
 
-package com.bernardomg.util.ksgen;
+package com.bernardomg.util.ksgen.generator;

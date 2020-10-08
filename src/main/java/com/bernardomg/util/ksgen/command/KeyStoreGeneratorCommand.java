@@ -1,28 +1,20 @@
 /**
- * The MIT License (MIT)
+ * Copyright 2020 the original author or authors
  * <p>
- * Copyright (c) 2016-2020 the original author or authors.
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  * <p>
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * <p>
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
-package com.bernardomg.util.ksgen;
+package com.bernardomg.util.ksgen.command;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,32 +29,36 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bernardomg.util.ksgen.generator.BouncyCastleKeyStoreFactory;
+import com.bernardomg.util.ksgen.generator.KeyStoreFactory;
+import com.bernardomg.util.ksgen.version.ManifestVersionProvider;
+
+import picocli.CommandLine.Command;
+
 /**
- * Executable class for generating the key stores used on the tests.
- * <p>
- * This is to be used only when for any reason new key stores are required.
- * Otherwise, as long as the ones included in the application work they should
- * be left untouched.
+ * Roll command. Receives an expression, rolls it and prints the result on
+ * screen.
+ * 
+ * @author Bernardo Martínez Garrido
  *
- * @author Bernardo Mart&iacute;nez Garrido
  */
-public final class KeyStoreGenerator {
+@Command(name = "roll", description = "Rolls an expression",
+        mixinStandardHelpOptions = true,
+        versionProvider = ManifestVersionProvider.class)
+public final class KeyStoreGeneratorCommand implements Runnable {
 
     /**
-     * The logger used for logging the key store creation.
+     * Logger.
      */
     private static final Logger LOGGER = LoggerFactory
-            .getLogger(KeyStoreGenerator.class);
+            .getLogger(KeyStoreGeneratorCommand.class);
 
-    /**
-     * Runs the generator and creates a new set of key stores.
-     *
-     * @param args
-     *            the arguments
-     * @throws Exception
-     *             if any problem occurs while generating the key stores
-     */
-    public static final void main(final String[] args) throws Exception {
+    public KeyStoreGeneratorCommand() {
+        super();
+    }
+
+    @Override
+    public final void run() {
         final KeyStore jksMain;        // Main key store
         final KeyStore jksSecond;      // Second key store
         final KeyStore jceksSym;       // Symmetric key store
@@ -90,10 +86,19 @@ public final class KeyStoreGenerator {
 
         LOGGER.trace("Creating main key store");
 
-        jksMain = factory.getJavaKeyStore(password, alias, issuer);
+        try {
+            jksMain = factory.getJavaKeyStore(password, alias, issuer);
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
 
         // Saves the main keystore
-        saveToFile(jksMain, jksMainPath, password.toCharArray());
+        try {
+            saveToFile(jksMain, jksMainPath, password.toCharArray());
+        } catch (KeyStoreException | NoSuchAlgorithmException
+                | CertificateException | IOException e) {
+            throw new RuntimeException(e);
+        }
 
         LOGGER.trace("Created main key store");
 
@@ -101,10 +106,19 @@ public final class KeyStoreGenerator {
 
         LOGGER.trace("Creating second key store");
 
-        jksSecond = factory.getJavaKeyStore(password, alias, issuer);
+        try {
+            jksSecond = factory.getJavaKeyStore(password, alias, issuer);
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
 
         // Saves the second key store
-        saveToFile(jksSecond, jksSecondPath, password.toCharArray());
+        try {
+            saveToFile(jksSecond, jksSecondPath, password.toCharArray());
+        } catch (KeyStoreException | NoSuchAlgorithmException
+                | CertificateException | IOException e) {
+            throw new RuntimeException(e);
+        }
 
         LOGGER.trace("Created second key store");
 
@@ -112,11 +126,20 @@ public final class KeyStoreGenerator {
 
         LOGGER.trace("Creating symmetric key store");
 
-        jceksSym = factory.getJavaCryptographicExtensionKeyStore(password,
-                alias);
+        try {
+            jceksSym = factory.getJavaCryptographicExtensionKeyStore(password,
+                    alias);
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
 
         // Saves the symmetric key store
-        saveToFile(jceksSym, jceksSymPath, password.toCharArray());
+        try {
+            saveToFile(jceksSym, jceksSymPath, password.toCharArray());
+        } catch (KeyStoreException | NoSuchAlgorithmException
+                | CertificateException | IOException e) {
+            throw new RuntimeException(e);
+        }
 
         LOGGER.trace("Created symmetric key store");
 
@@ -154,13 +177,6 @@ public final class KeyStoreGenerator {
         } finally {
             IOUtils.closeQuietly(output);
         }
-    }
-
-    /**
-     * Private constructor to avoid initialization.
-     */
-    private KeyStoreGenerator() {
-        super();
     }
 
 }

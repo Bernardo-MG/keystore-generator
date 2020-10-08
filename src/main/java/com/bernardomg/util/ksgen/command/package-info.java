@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 /**
- * Key store generator.
+ * CLI commands.
  */
 
-package com.bernardomg.util.ksgen;
+package com.bernardomg.util.ksgen.command;
