@@ -202,8 +202,6 @@
       <!-- ================= MAVEN SITE ================= -->
       <!-- ============================================== -->
       <site.skin.version>2.0.8</site.skin.version>
-      <bintrayURL>https://bintray.com/bernardo-mg/maven/keystore-generator/view</bintrayURL>
-      <mavenURL>http://mvnrepository.com/artifact/com.bernardomg.util/keystore-generator</mavenURL>
    </properties>
 
    <!-- ********************************************** -->
