@@ -60,10 +60,8 @@ public final class KeyStoreGeneratorCommand implements Runnable {
     @Override
     public final void run() {
         final KeyStore jksMain;        // Main key store
-        final KeyStore jksSecond;      // Second key store
         final KeyStore jceksSym;       // Symmetric key store
         final String jksMainPath;      // Path for the main key store
-        final String jksSecondPath;    // Path for the second key store
         final String jceksSymPath;     // Path for the symmetric key store
         final String password;         // Password to apply to the key stores
         final String alias;            // Alias for the certificate
@@ -73,7 +71,6 @@ public final class KeyStoreGeneratorCommand implements Runnable {
         factory = new BouncyCastleKeyStoreFactory();
 
         jksMainPath = "src/main/resources/keystore.jks";
-        jksSecondPath = "src/main/resources/keystore2.jks";
         jceksSymPath = "src/main/resources/symmetric.jceks";
 
         password = "123456";
@@ -101,26 +98,6 @@ public final class KeyStoreGeneratorCommand implements Runnable {
         }
 
         LOGGER.trace("Created main key store");
-
-        // Second key store
-
-        LOGGER.trace("Creating second key store");
-
-        try {
-            jksSecond = factory.getJavaKeyStore(password, alias, issuer);
-        } catch (final Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        // Saves the second key store
-        try {
-            saveToFile(jksSecond, jksSecondPath, password.toCharArray());
-        } catch (KeyStoreException | NoSuchAlgorithmException
-                | CertificateException | IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        LOGGER.trace("Created second key store");
 
         // Symmetric key store
 
