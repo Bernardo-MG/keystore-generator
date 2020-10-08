@@ -396,10 +396,6 @@
             <!-- Checks for patterns which are prone to errors -->
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>findbugs-maven-plugin</artifactId>
-            <configuration>
-               <!-- Exclusion patterns -->
-               <excludeFilterFile>${project.basedir}/src/config/findbugs/findbugs-exclude.xml</excludeFilterFile>
-            </configuration>
          </plugin>
          <plugin>
             <!-- PMD -->
