@@ -198,12 +198,22 @@
       <guava.version>29.0-jre</guava.version>
       <log4j.version>2.13.3</log4j.version>
       <slf4j.version>1.7.30</slf4j.version>
+      <spring.boot.version>2.3.1.RELEASE</spring.boot.version>
+      <!-- ============================================== -->
+      <!-- ============== PLUGINS VERSIONS ============== -->
+      <!-- ============================================== -->
+      <plugin.spring.boot.version>${spring.boot.version}</plugin.spring.boot.version>
       <!-- ============================================== -->
       <!-- ================= MAVEN SITE ================= -->
       <!-- ============================================== -->
       <site.skin.version>2.0.8</site.skin.version>
       <bintrayURL>https://bintray.com/bernardo-mg/maven/keystore-generator/view</bintrayURL>
       <mavenURL>http://mvnrepository.com/artifact/com.bernardomg.util/keystore-generator</mavenURL>
+      <!-- ============================================== -->
+      <!-- ================= EXECUTABLE ================= -->
+      <!-- ============================================== -->
+      <main.path>com.bernardomg.util.ksgen.KeyStoreGenerator</main.path>
+      <exec.file.name>keystore</exec.file.name>
    </properties>
 
    <!-- ********************************************** -->
@@ -312,6 +322,40 @@
                </dependency>
             </dependencies>
          </plugin>
+         <plugin>
+            <!-- Spring Boot -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <goals>
+                     <goal>repackage</goal>
+                  </goals>
+                  <configuration>
+                     <classifier>spring-boot</classifier>
+                     <mainClass>${main.path}</mainClass>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
+            <!-- Antrun -->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <phase>package</phase>
+                  <configuration>
+                     <target>
+                        <copy file="${project.build.directory}/${project.build.finalName}-spring-boot.jar" tofile="${project.build.directory}/${exec.file.name}.jar" />
+                     </target>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
       </plugins>
    </build>
 
@@ -330,6 +374,16 @@
             <configuration>
                <!-- The customized rules file -->
                <configLocation>${project.basedir}/src/config/checkstyle/checkstyle-rules.xml</configLocation>
+            </configuration>
+         </plugin>
+         <plugin>
+            <!-- FindBugs -->
+            <!-- Checks for patterns which are prone to errors -->
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>findbugs-maven-plugin</artifactId>
+            <configuration>
+               <!-- Exclusion patterns -->
+               <excludeFilterFile>${project.basedir}/src/config/findbugs/findbugs-exclude.xml</excludeFilterFile>
             </configuration>
          </plugin>
          <plugin>
