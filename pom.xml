@@ -278,6 +278,16 @@
 
    <build>
       <defaultGoal>clean package install</defaultGoal>
+      <pluginManagement>
+         <plugins>
+            <plugin>
+               <!-- Spring Boot -->
+               <groupId>org.springframework.boot</groupId>
+               <artifactId>spring-boot-maven-plugin</artifactId>
+               <version>${plugin.spring.boot.version}</version>
+            </plugin>
+         </plugins>
+      </pluginManagement>
       <plugins>
          <plugin>
             <!-- Changes -->
