@@ -17,7 +17,7 @@
 package com.bernardomg.util.ksgen.menu;
 
 import com.bernardomg.util.ksgen.command.KeyStoreGeneratorCommand;
-import com.bernardomg.util.ksgen.manifest.ManifestVersionProvider;
+import com.bernardomg.util.ksgen.version.ManifestVersionProvider;
 
 import picocli.CommandLine.Command;
 

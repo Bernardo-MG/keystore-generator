@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import com.bernardomg.util.ksgen.generator.BouncyCastleKeyStoreFactory;
 import com.bernardomg.util.ksgen.generator.KeyStoreFactory;
-import com.bernardomg.util.ksgen.manifest.ManifestVersionProvider;
+import com.bernardomg.util.ksgen.version.ManifestVersionProvider;
 
 import picocli.CommandLine.Command;
 

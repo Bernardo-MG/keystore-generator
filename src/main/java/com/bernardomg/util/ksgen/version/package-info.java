@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 /**
- * Manifest classes.
+ * Components for acquiring the version.
  */
 
-package com.bernardomg.util.ksgen.manifest;
+package com.bernardomg.util.ksgen.version;
