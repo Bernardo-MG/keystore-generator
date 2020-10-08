@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 /**
- * Key store generator.
+ * Components for acquiring the version.
  */
 
-package com.bernardomg.util.ksgen;
+package com.bernardomg.util.ksgen.version;

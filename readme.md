@@ -2,6 +2,24 @@
 
 Keystore generator to be used for testing purposes. It generates a basic Java keystore.
 
+To run the project first package it:
+
+```
+mvn clean package
+```
+
+Afterwards a runnable jar will be in the target folder. It can be run like this:
+
+```
+java -jar target/keygen.jar keystore keystore.jks 123456 alias "CN=www.bernardomg.com, O=bernardomg, OU=None, L=London, ST=England, C=UK"
+```
+
+To show additional commands:
+
+```
+java -jar target/keygen.jar -h
+```
+
 [![Release docs](https://img.shields.io/badge/docs-release-blue.svg)][site-release]
 [![Development docs](https://img.shields.io/badge/docs-develop-blue.svg)][site-develop]
 
@@ -10,6 +28,7 @@ Keystore generator to be used for testing purposes. It generates a basic Java ke
 
 ## Features
 
+- Command Line Interface
 - Generates JKS stores
 - Generates symmetric JKS stores
 
@@ -67,9 +86,9 @@ If you wish to fork or modify the code, visit the [GitHub project page][scm], wh
 The project has been released under the [MIT License][license].
 
 [issues]: https://github.com/bernardo-mg/keystore-generator/issues
-[javadoc-develop]: http://docs.bernardomg.com/development/maven/keystore-generator/apidocs
-[javadoc-release]: http://docs.bernardomg.com/maven/keystore-generator/apidocs
+[javadoc-develop]: https://docs.bernardomg.com/development/maven/keystore-generator/apidocs
+[javadoc-release]: https://docs.bernardomg.com/maven/keystore-generator/apidocs
 [license]: http://www.opensource.org/licenses/mit-license.php
 [scm]: https://github.com/bernardo-mg/keystore-generator
-[site-develop]: http://docs.bernardomg.com/development/maven/keystore-generator
-[site-release]: http://docs.bernardomg.com/maven/keystore-generator
+[site-develop]: https://docs.bernardomg.com/development/maven/keystore-generator
+[site-release]: https://docs.bernardomg.com/maven/keystore-generator

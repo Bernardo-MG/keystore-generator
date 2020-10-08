@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 /**
- * Key store generator.
+ * CLI Menu.
  */
 
-package com.bernardomg.util.ksgen;
+package com.bernardomg.util.ksgen.menu;

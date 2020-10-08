@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2016 the original author or authors.
+ * Copyright (c) 2016-2020 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.bernardomg.util.ksgen;
+package com.bernardomg.util.ksgen.generator;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
