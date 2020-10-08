@@ -211,7 +211,7 @@
       <!-- ============================================== -->
       <!-- ================= EXECUTABLE ================= -->
       <!-- ============================================== -->
-      <main.path>com.bernardomg.util.ksgen.KeyStoreGenerator</main.path>
+      <main.path>com.bernardomg.util.ksgen.Main</main.path>
       <exec.file.name>keygen</exec.file.name>
    </properties>
 
