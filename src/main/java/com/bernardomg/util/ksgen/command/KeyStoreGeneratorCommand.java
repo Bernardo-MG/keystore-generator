@@ -29,8 +29,8 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.bernardomg.util.ksgen.BouncyCastleKeyStoreFactory;
-import com.bernardomg.util.ksgen.KeyStoreFactory;
+import com.bernardomg.util.ksgen.generator.BouncyCastleKeyStoreFactory;
+import com.bernardomg.util.ksgen.generator.KeyStoreFactory;
 import com.bernardomg.util.ksgen.manifest.ManifestVersionProvider;
 
 import picocli.CommandLine.Command;

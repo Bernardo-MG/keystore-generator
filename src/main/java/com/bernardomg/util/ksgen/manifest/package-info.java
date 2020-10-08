@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 /**
- * Key store generator.
+ * Manifest classes.
  */
 
-package com.bernardomg.util.ksgen;
+package com.bernardomg.util.ksgen.manifest;
