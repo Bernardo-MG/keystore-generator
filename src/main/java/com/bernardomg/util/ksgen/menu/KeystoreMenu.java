@@ -17,21 +17,29 @@
 package com.bernardomg.util.ksgen.menu;
 
 import com.bernardomg.util.ksgen.command.KeyStoreGeneratorCommand;
+import com.bernardomg.util.ksgen.command.SymmetricKeyStoreGeneratorCommand;
 import com.bernardomg.util.ksgen.version.ManifestVersionProvider;
 
 import picocli.CommandLine.Command;
 
 /**
- * Roll command. Receives an expression, rolls it and prints the result on
- * screen.
+ * Key store generation menu.
  * 
  * @author Bernardo Martínez Garrido
  *
  */
-@Command(description = "Handles roll operations",
-        subcommands = { KeyStoreGeneratorCommand.class },
+@Command(description = "Creates key stores",
+        subcommands = { KeyStoreGeneratorCommand.class,
+                SymmetricKeyStoreGeneratorCommand.class },
         mixinStandardHelpOptions = true,
         versionProvider = ManifestVersionProvider.class)
 public class KeystoreMenu {
+
+    /**
+     * Default constructor.
+     */
+    public KeystoreMenu() {
+        super();
+    }
 
 }

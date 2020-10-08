@@ -36,21 +36,21 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
 /**
- * Key store command. Generates a key store.
+ * Symmetric key store command. Generates a symmetric key store.
  * 
  * @author Bernardo Martínez Garrido
  *
  */
-@Command(name = "keystore", description = "Creates a keystore",
+@Command(name = "symmetric", description = "Creates a symmetric keystore",
         mixinStandardHelpOptions = true,
         versionProvider = ManifestVersionProvider.class)
-public final class KeyStoreGeneratorCommand implements Runnable {
+public final class SymmetricKeyStoreGeneratorCommand implements Runnable {
 
     /**
      * Logger.
      */
     private static final Logger LOGGER = LoggerFactory
-            .getLogger(KeyStoreGeneratorCommand.class);
+            .getLogger(SymmetricKeyStoreGeneratorCommand.class);
 
     /**
      * Keystore alias.
@@ -58,13 +58,6 @@ public final class KeyStoreGeneratorCommand implements Runnable {
     @Parameters(index = "2", description = "Keystore alias",
             paramLabel = "ALIAS")
     private String              alias;
-
-    /**
-     * Keystore alias.
-     */
-    @Parameters(index = "3", description = "Keystore issuer",
-            paramLabel = "ISSUER")
-    private String              issuer;
 
     /**
      * Keystore password.
@@ -83,13 +76,13 @@ public final class KeyStoreGeneratorCommand implements Runnable {
     /**
      * Default constructor.
      */
-    public KeyStoreGeneratorCommand() {
+    public SymmetricKeyStoreGeneratorCommand() {
         super();
     }
 
     @Override
     public final void run() {
-        final KeyStore keystore;       // Main key store
+        final KeyStore keystore;       // Symmetric key store
         final KeyStoreFactory factory; // KS factory
 
         factory = new BouncyCastleKeyStoreFactory();
@@ -97,11 +90,11 @@ public final class KeyStoreGeneratorCommand implements Runnable {
         Security.addProvider(new BouncyCastleProvider());
 
         LOGGER.debug("Alias {}", alias);
-        LOGGER.debug("Issuer {}", issuer);
         LOGGER.debug("Saving to {}", path);
 
         try {
-            keystore = factory.getJavaKeyStore(password, alias, issuer);
+            keystore = factory.getJavaCryptographicExtensionKeyStore(password,
+                    alias);
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
