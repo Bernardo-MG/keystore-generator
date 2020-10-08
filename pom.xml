@@ -15,7 +15,7 @@
    <parent>
       <groupId>com.bernardomg.maven</groupId>
       <artifactId>base-pom</artifactId>
-      <version>1.2.0</version>
+      <version>1.3.4</version>
    </parent>
 
    <!-- ********************************************** -->
@@ -193,15 +193,15 @@
       <!-- ============================================== -->
       <!-- =========== DEPENDENCIES VERSIONS ============ -->
       <!-- ============================================== -->
-      <bouncycastle.version>1.57</bouncycastle.version>
-      <commons.io.version>2.5</commons.io.version>
-      <guava.version>20.0</guava.version>
-      <log4j.version>2.7</log4j.version>
-      <slf4j.version>1.7.21</slf4j.version>
+      <bouncycastle.version>1.66</bouncycastle.version>
+      <commons.io.version>2.8.0</commons.io.version>
+      <guava.version>29.0-jre</guava.version>
+      <log4j.version>2.13.3</log4j.version>
+      <slf4j.version>1.7.30</slf4j.version>
       <!-- ============================================== -->
       <!-- ================= MAVEN SITE ================= -->
       <!-- ============================================== -->
-      <site.skin.version>1.2.0</site.skin.version>
+      <site.skin.version>2.0.8</site.skin.version>
       <bintrayURL>https://bintray.com/bernardo-mg/maven/keystore-generator/view</bintrayURL>
       <mavenURL>http://mvnrepository.com/artifact/com.bernardomg.util/keystore-generator</mavenURL>
    </properties>
@@ -242,13 +242,13 @@
          <version>${commons.io.version}</version>
       </dependency>
       <!-- ============================================== -->
-      <!-- ================== LOGGING =================== -->
+      <!-- ================== LOGGERS =================== -->
       <!-- ============================================== -->
       <dependency>
-         <!-- Log4j core -->
-         <groupId>org.apache.logging.log4j</groupId>
-         <artifactId>log4j-core</artifactId>
-         <version>${log4j.version}</version>
+         <!-- SLF4J API -->
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-api</artifactId>
+         <version>${slf4j.version}</version>
       </dependency>
       <dependency>
          <!-- Log4j SLF4J Bridge -->
@@ -257,10 +257,10 @@
          <version>${log4j.version}</version>
       </dependency>
       <dependency>
-         <!-- SLF4J API -->
-         <groupId>org.slf4j</groupId>
-         <artifactId>slf4j-api</artifactId>
-         <version>${slf4j.version}</version>
+         <!-- Log4j core -->
+         <groupId>org.apache.logging.log4j</groupId>
+         <artifactId>log4j-core</artifactId>
+         <version>${log4j.version}</version>
       </dependency>
    </dependencies>
 
