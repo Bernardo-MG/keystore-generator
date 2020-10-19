@@ -106,7 +106,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
     /**
      * The algorithm to be used for the secret key.
      */
-    private final String        secretKeyAlgorithm = "DES";
+    private final String        secretKeyAlgorithm = "RSA";
 
     /**
      * The algorith to use for the signature.
@@ -224,7 +224,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
         issuerName = new X500Name(issuer);
         subjectName = issuerName;
-        serial = BigInteger.valueOf(getRandom().nextInt());
+        serial = BigInteger.valueOf(random.nextInt());
 
         LOGGER.debug("Certificate for dates {} to {}", certStart, certEnd);
 
@@ -323,24 +323,6 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
     }
 
     /**
-     * Returns the random values generator.
-     *
-     * @return the random values generator
-     */
-    private final Random getRandom() {
-        return random;
-    }
-
-    /**
-     * Returns the algorithm to be used for the secret key.
-     *
-     * @return the algorithm to be used for the secret key
-     */
-    private final String getSecretKeyAlgorithm() {
-        return secretKeyAlgorithm;
-    }
-
-    /**
      * Returns the algorithm to use for the signature.
      *
      * @return
@@ -423,7 +405,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         final byte[] key;                     // Secret key as array
 
         key = getPasswordArray(password);
-        secretKey = new SecretKeySpec(key, getSecretKeyAlgorithm());
+        secretKey = new SecretKeySpec(key, secretKeyAlgorithm);
 
         LOGGER.debug("Created secret key {} with format {}",
                 Arrays.asList(secretKey.getEncoded()), secretKey.getFormat());
