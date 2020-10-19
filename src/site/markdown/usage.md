@@ -27,5 +27,5 @@ java -jar target/keygen.jar keystore keystore.jks 123456 alias "CN=www.bernardom
 ## Generating a Symmetric Key Store
 
 ```
-java -jar target/keygen.jar symmetric PATH=keystore.jceks PASS=123456 ALIAS=alias
+java -jar target/keygen.jar symmetric keystore.jceks PASS=123456 ALIAS=alias
 ```

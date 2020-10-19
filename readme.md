@@ -20,6 +20,8 @@ To show additional commands:
 java -jar target/keygen.jar -h
 ```
 
+More information, and instructions for other kinds of keystores, can be found in the documentation.
+
 [![Release docs](https://img.shields.io/badge/docs-release-blue.svg)][site-release]
 [![Development docs](https://img.shields.io/badge/docs-develop-blue.svg)][site-develop]
 
@@ -50,13 +52,17 @@ The documentation site is actually a Maven site, and its sources are included in
 $ mvn verify site
 ```
 
-The verify phase is required, otherwise some of the reports won't be generated.
+The verify phase is required, otherwise some of the reports won't be generated. It can be run like this:
+
+```
+java -jar target/keygen.jar keystore keystore.jks 123456 alias "CN=www.bernardomg.com, O=bernardomg, OU=None, L=London, ST=England, C=UK"
+```
+
+More information, and instructions for other kinds of keystores, can be found in the documentation.
 
 ## Usage
 
-The application is coded in Java, using Maven to manage the project.
-
-A java runnable class, KeystoreGenerator, allows making use of the project.
+The application is embedded in a runnable JAR.
 
 ### Prerequisites
 
