@@ -192,7 +192,6 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         certificate = getSignedCertificate(builder, keypair.getPrivate());
 
         // Verifies the certificate
-        certificate.checkValidity(getCurrentDate());
         certificate.verify(keypair.getPublic());
 
         LOGGER.debug("Created certificate of type {} with encoded value {}",
@@ -251,15 +250,6 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
         return builder;
 
-    }
-
-    /**
-     * Returns the current date.
-     *
-     * @return the current date
-     */
-    private final Date getCurrentDate() {
-        return new Date();
     }
 
     /**
