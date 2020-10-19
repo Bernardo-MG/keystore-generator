@@ -87,6 +87,16 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
             .getLogger(BouncyCastleKeyStoreFactory.class);
 
     /**
+     * Certificate end date;
+     */
+    private Date                certEnd            = getOneHundredYearsFutureDate();
+
+    /**
+     * Certificate start date.
+     */
+    private Date                certStart          = getOneYearBackDate();
+
+    /**
      * Random values generator.
      * <p>
      * To be used whenever a new random value is required.
@@ -108,6 +118,16 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
      */
     public BouncyCastleKeyStoreFactory() {
         super();
+    }
+
+    @Override
+    public final void setCertEnd(Date certEnd) {
+        this.certEnd = certEnd;
+    }
+
+    @Override
+    public final void setCertStart(Date certStart) {
+        this.certStart = certStart;
     }
 
     /**
@@ -200,8 +220,6 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         final X500Name subjectName;             // Subject name
         final BigInteger serial;                // Serial number
         final X509v3CertificateBuilder builder; // Certificate builder
-        final Date start;                       // Certificate start date
-        final Date end;                         // Certificate end date
         final KeyUsage usage;                   // Key usage
         final ASN1EncodableVector purposes;     // Certificate purposes
 
@@ -209,12 +227,10 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         subjectName = issuerName;
         serial = BigInteger.valueOf(getRandom().nextInt());
 
-        // Dates for the certificate
-        start = getOneYearBackDate();
-        end = getOneHundredYearsFutureDate();
+        LOGGER.debug("Certificate for dates {} to {}", certStart, certEnd);
 
-        builder = new JcaX509v3CertificateBuilder(issuerName, serial, start,
-                end, subjectName, publicKey);
+        builder = new JcaX509v3CertificateBuilder(issuerName, serial, certStart,
+                certEnd, subjectName, publicKey);
 
         builder.addExtension(Extension.subjectKeyIdentifier, false,
                 createSubjectKeyIdentifier(publicKey));
@@ -239,7 +255,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
     /**
      * Returns the current date.
-     * 
+     *
      * @return the current date
      */
     private final Date getCurrentDate() {
@@ -274,7 +290,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
     /**
      * Returns a date for this day one hundred years in the future.
-     * 
+     *
      * @return a date one hundred years in the future
      */
     private final Date getOneHundredYearsFutureDate() {
@@ -291,7 +307,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
     /**
      * Returns a date for this day the previous year.
-     * 
+     *
      * @return a date one year back
      */
     private final Date getOneYearBackDate() {
@@ -306,7 +322,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
     /**
      * Returns the password as a byte array.
-     * 
+     *
      * @param password
      *            the password to transform into a byte array
      * @return the password as a byte array
@@ -318,7 +334,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
     /**
      * Returns the random values generator.
-     * 
+     *
      * @return the random values generator
      */
     private final Random getRandom() {
@@ -327,7 +343,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
     /**
      * Returns the algorithm to be used for the secret key.
-     * 
+     *
      * @return the algorithm to be used for the secret key
      */
     private final String getSecretKeyAlgorithm() {
@@ -336,7 +352,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
     /**
      * Returns the algorithm to use for the signature.
-     * 
+     *
      * @return
      */
     private final String getSignatureAlgorithm() {

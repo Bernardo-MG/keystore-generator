@@ -23,6 +23,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
 import java.security.cert.CertificateException;
+import java.util.Date;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
@@ -33,11 +34,12 @@ import com.bernardomg.util.ksgen.generator.KeyStoreFactory;
 import com.bernardomg.util.ksgen.version.ManifestVersionProvider;
 
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 /**
  * Symmetric key store command. Generates a symmetric key store.
- * 
+ *
  * @author Bernardo Martínez Garrido
  *
  */
@@ -74,6 +76,18 @@ public final class SymmetricKeyStoreGeneratorCommand implements Runnable {
     private String              path;
 
     /**
+     * Certificate start date.
+     */
+    @Option(names = "-start", description = "Certificate start date")
+    private Date                certStart;
+
+    /**
+     * Certificate start date.
+     */
+    @Option(names = "-end", description = "Certificate end date")
+    private Date                certEnd;
+
+    /**
      * Default constructor.
      */
     public SymmetricKeyStoreGeneratorCommand() {
@@ -86,6 +100,13 @@ public final class SymmetricKeyStoreGeneratorCommand implements Runnable {
         final KeyStoreFactory factory; // KS factory
 
         factory = new BouncyCastleKeyStoreFactory();
+
+        if (certStart != null) {
+            factory.setCertStart(certStart);
+        }
+        if (certEnd != null) {
+            factory.setCertEnd(certEnd);
+        }
 
         Security.addProvider(new BouncyCastleProvider());
 

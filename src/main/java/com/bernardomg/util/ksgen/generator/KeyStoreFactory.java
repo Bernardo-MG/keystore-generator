@@ -25,6 +25,7 @@
 package com.bernardomg.util.ksgen.generator;
 
 import java.security.KeyStore;
+import java.util.Date;
 
 /**
  * Factory for generating key stores.
@@ -32,6 +33,22 @@ import java.security.KeyStore;
  * @author Bernardo Mart&iacute;nez Garrido
  */
 public interface KeyStoreFactory {
+
+    /**
+     * Sets the certificate start date.
+     *
+     * @param date
+     *            certificate start date
+     */
+    public void setCertStart(Date date);
+
+    /**
+     * Sets the certificate end date.
+     *
+     * @param date
+     *            certificate end date
+     */
+    public void setCertEnd(Date date);
 
     /**
      * Creates a Java Cryptographic Extension Key Store (JCEKS), which will
