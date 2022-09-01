@@ -133,13 +133,11 @@
       <!-- ============================================== -->
       <!-- =========== DEPENDENCIES VERSIONS ============ -->
       <!-- ============================================== -->
-      <bouncycastle.version>1.66</bouncycastle.version>
-      <commons.io.version>2.8.0</commons.io.version>
-      <guava.version>29.0-jre</guava.version>
-      <log4j.version>2.13.3</log4j.version>
-      <picocli.version>4.4.0</picocli.version>
-      <slf4j.version>1.7.30</slf4j.version>
-      <spring.boot.version>2.3.1.RELEASE</spring.boot.version>
+      <bouncycastle.version>1.70</bouncycastle.version>
+      <commons.io.version>2.11.0</commons.io.version>
+      <guava.version>31.1-jre</guava.version>
+      <picocli.version>4.6.3</picocli.version>
+      <spring.boot.version>2.5.3</spring.boot.version>
       <!-- ============================================== -->
       <!-- ============== PLUGINS VERSIONS ============== -->
       <!-- ============================================== -->
@@ -164,6 +162,19 @@
    <!-- ********************************************** -->
    <!-- *************** DEPENDENCIES ***************** -->
    <!-- ********************************************** -->
+
+   <dependencyManagement>
+      <dependencies>
+         <dependency>
+            <!-- Spring Boot Dependencies BOM -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>${spring.boot.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+         </dependency>
+      </dependencies>
+   </dependencyManagement>
 
    <dependencies>
       <dependency>
@@ -209,19 +220,16 @@
          <!-- SLF4J API -->
          <groupId>org.slf4j</groupId>
          <artifactId>slf4j-api</artifactId>
-         <version>${slf4j.version}</version>
       </dependency>
       <dependency>
          <!-- Log4j SLF4J Bridge -->
          <groupId>org.apache.logging.log4j</groupId>
          <artifactId>log4j-slf4j-impl</artifactId>
-         <version>${log4j.version}</version>
       </dependency>
       <dependency>
          <!-- Log4j core -->
          <groupId>org.apache.logging.log4j</groupId>
          <artifactId>log4j-core</artifactId>
-         <version>${log4j.version}</version>
       </dependency>
    </dependencies>
 
