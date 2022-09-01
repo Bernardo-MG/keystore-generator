@@ -27,5 +27,13 @@ java -jar target/keygen.jar keystore keystore.jks 123456 alias "CN=www.bernardom
 ## Generating a Symmetric Key Store
 
 ```
-java -jar target/keygen.jar symmetric PATH=keystore.jceks PASS=123456 ALIAS=alias
+java -jar target/keygen.jar symmetric keystore.jceks PASS=123456 ALIAS=alias
+```
+
+## Defining Certificate Range
+
+The -start and -end optional parameters can be used to defined the validity range of a certificate:
+
+```
+java -jar target/keygen.jar keystore keystore.jks 123456 alias "CN=www.bernardomg.com, O=bernardomg, OU=None, L=London, ST=England, C=UK" -start=2020-01-01 -end=2020-02-01
 ```

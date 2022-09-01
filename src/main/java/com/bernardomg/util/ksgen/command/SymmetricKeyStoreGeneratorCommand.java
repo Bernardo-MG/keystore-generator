@@ -23,6 +23,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
 import java.security.cert.CertificateException;
+import java.util.Date;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
@@ -33,44 +34,52 @@ import com.bernardomg.util.ksgen.generator.KeyStoreFactory;
 import com.bernardomg.util.ksgen.version.ManifestVersionProvider;
 
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 /**
  * Symmetric key store command. Generates a symmetric key store.
- * 
+ *
  * @author Bernardo Martínez Garrido
  *
  */
-@Command(name = "symmetric", description = "Creates a symmetric keystore",
-        mixinStandardHelpOptions = true,
+@Command(name = "symmetric", description = "Creates a symmetric keystore", mixinStandardHelpOptions = true,
         versionProvider = ManifestVersionProvider.class)
 public final class SymmetricKeyStoreGeneratorCommand implements Runnable {
 
     /**
      * Logger.
      */
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(SymmetricKeyStoreGeneratorCommand.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SymmetricKeyStoreGeneratorCommand.class);
 
     /**
      * Keystore alias.
      */
-    @Parameters(index = "2", description = "Keystore alias",
-            paramLabel = "ALIAS")
+    @Parameters(index = "2", description = "Keystore alias", paramLabel = "ALIAS")
     private String              alias;
+
+    /**
+     * Certificate start date.
+     */
+    @Option(names = "-end", description = "Certificate end date")
+    private Date                certEnd;
+
+    /**
+     * Certificate start date.
+     */
+    @Option(names = "-start", description = "Certificate start date")
+    private Date                certStart;
 
     /**
      * Keystore password.
      */
-    @Parameters(index = "1", description = "Keystore password",
-            paramLabel = "PASS")
+    @Parameters(index = "1", description = "Keystore password", paramLabel = "PASS")
     private String              password;
 
     /**
      * Path to create the keystore in.
      */
-    @Parameters(index = "0", description = "Path where to create the keystore",
-            paramLabel = "PATH")
+    @Parameters(index = "0", description = "Path where to create the keystore", paramLabel = "PATH")
     private String              path;
 
     /**
@@ -82,10 +91,17 @@ public final class SymmetricKeyStoreGeneratorCommand implements Runnable {
 
     @Override
     public final void run() {
-        final KeyStore keystore;       // Symmetric key store
-        final KeyStoreFactory factory; // KS factory
+        final KeyStore        keystore; // Symmetric key store
+        final KeyStoreFactory factory;  // KS factory
 
         factory = new BouncyCastleKeyStoreFactory();
+
+        if (certStart != null) {
+            factory.setCertStart(certStart);
+        }
+        if (certEnd != null) {
+            factory.setCertEnd(certEnd);
+        }
 
         Security.addProvider(new BouncyCastleProvider());
 
@@ -93,16 +109,14 @@ public final class SymmetricKeyStoreGeneratorCommand implements Runnable {
         LOGGER.debug("Saving to {}", path);
 
         try {
-            keystore = factory.getJavaCryptographicExtensionKeyStore(password,
-                    alias);
+            keystore = factory.getJavaCryptographicExtensionKeyStore(password, alias);
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
 
         try {
             saveToFile(keystore, path, password.toCharArray());
-        } catch (KeyStoreException | NoSuchAlgorithmException
-                | CertificateException | IOException e) {
+        } catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -119,17 +133,14 @@ public final class SymmetricKeyStoreGeneratorCommand implements Runnable {
      * @throws KeyStoreException
      *             if the keystore has not been initialized
      * @throws NoSuchAlgorithmException
-     *             if the appropriate data integrity algorithm could not be
-     *             found
+     *             if the appropriate data integrity algorithm could not be found
      * @throws CertificateException
-     *             if any of the certificates included in the key store data
-     *             could not be stored
+     *             if any of the certificates included in the key store data could not be stored
      * @throws IOException
      *             if an I/O error occurs
      */
-    private final void saveToFile(final KeyStore keyStore, final String path,
-            final char[] password) throws KeyStoreException,
-            NoSuchAlgorithmException, CertificateException, IOException {
+    private final void saveToFile(final KeyStore keyStore, final String path, final char[] password)
+            throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException {
         try (final FileOutputStream output = new FileOutputStream(path)) {
             keyStore.store(output, password);
         }

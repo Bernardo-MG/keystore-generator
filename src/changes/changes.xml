@@ -25,5 +25,10 @@
                 Added CLI.
             </action>
         </release>
+        <release version="1.2.1" date="2022-09-02" description="Update">
+            <action dev="bmg" type="update">
+                Updated dependencies.
+            </action>
+        </release>
     </body>
 </document>

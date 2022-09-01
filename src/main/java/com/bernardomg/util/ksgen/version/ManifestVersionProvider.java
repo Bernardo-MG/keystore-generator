@@ -30,7 +30,7 @@ import picocli.CommandLine.IVersionProvider;
 
 /**
  * Version provider based on the JAR manifest.
- * 
+ *
  * @author Bernardo Martínez Garrido
  *
  */
@@ -39,8 +39,7 @@ public final class ManifestVersionProvider implements IVersionProvider {
     /**
      * Logger.
      */
-    private static final Logger LOGGER  = LoggerFactory
-            .getLogger(ManifestVersionProvider.class);
+    private static final Logger LOGGER  = LoggerFactory.getLogger(ManifestVersionProvider.class);
 
     /**
      * Project title. Used to identify the correct manifest.
@@ -54,18 +53,18 @@ public final class ManifestVersionProvider implements IVersionProvider {
     @Override
     public final String[] getVersion() throws Exception {
         final Enumeration<URL> resources = CommandLine.class.getClassLoader()
-                .getResources("META-INF/MANIFEST.MF");
-        String[] result;
-        Boolean found;
+            .getResources("META-INF/MANIFEST.MF");
+        String[]               result;
+        Boolean                found;
 
         result = new String[0];
         found = false;
         while ((!found) && (resources.hasMoreElements())) {
-            final URL url;
-            final Manifest manifest;
+            final URL        url;
+            final Manifest   manifest;
             final Attributes attr;
-            final String version;
-            final String finalVersion;
+            final String     version;
+            final String     finalVersion;
 
             url = resources.nextElement();
 
@@ -81,9 +80,8 @@ public final class ManifestVersionProvider implements IVersionProvider {
                 attr = manifest.getMainAttributes();
 
                 version = "%s version %s";
-                finalVersion = String.format(version,
-                        get(attr, "Implementation-Title"),
-                        get(attr, "Implementation-Version"));
+                finalVersion = String.format(version, get(attr, "Implementation-Title"),
+                    get(attr, "Implementation-Version"));
                 result = new String[] { finalVersion };
                 found = true;
             }
@@ -94,7 +92,7 @@ public final class ManifestVersionProvider implements IVersionProvider {
 
     /**
      * Returns the value for the received key.
-     * 
+     *
      * @param attributes
      *            source to get the value
      * @param key
@@ -107,15 +105,14 @@ public final class ManifestVersionProvider implements IVersionProvider {
 
     /**
      * Checks if the manifest is the correct one.
-     * 
+     *
      * @param manifest
      *            manifest to check
-     * @return {@code true} if it is the expected manifest, {@code false} in
-     *         other case
+     * @return {@code true} if it is the expected manifest, {@code false} in other case
      */
     private final Boolean isValid(final Manifest manifest) {
         final Attributes attributes;
-        final Object title;
+        final Object     title;
 
         attributes = manifest.getMainAttributes();
         title = get(attributes, "Implementation-Title");
