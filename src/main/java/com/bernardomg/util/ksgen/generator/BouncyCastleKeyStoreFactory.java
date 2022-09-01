@@ -83,8 +83,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
     /**
      * The logger used for logging the key store creation.
      */
-    private static final Logger LOGGER             = LoggerFactory
-            .getLogger(BouncyCastleKeyStoreFactory.class);
+    private static final Logger LOGGER             = LoggerFactory.getLogger(BouncyCastleKeyStoreFactory.class);
 
     /**
      * Certificate end date;
@@ -121,12 +120,12 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
     }
 
     @Override
-    public final void setCertEnd(Date certEnd) {
+    public final void setCertEnd(final Date certEnd) {
         this.certEnd = certEnd;
     }
 
     @Override
-    public final void setCertStart(Date certStart) {
+    public final void setCertStart(final Date certStart) {
         this.certStart = certStart;
     }
 
@@ -139,17 +138,14 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
      * @throws IOException
      *             if any problem occurs while reading the key
      */
-    private final SubjectKeyIdentifier createSubjectKeyIdentifier(final Key key)
-            throws IOException {
-        final ASN1Sequence seq;        // Sequence for the key info
+    private final SubjectKeyIdentifier createSubjectKeyIdentifier(final Key key) throws IOException {
+        final ASN1Sequence seq; // Sequence for the key info
 
-        try (final ASN1InputStream stream = new ASN1InputStream(
-                new ByteArrayInputStream(key.getEncoded()))) {
+        try (final ASN1InputStream stream = new ASN1InputStream(new ByteArrayInputStream(key.getEncoded()))) {
             seq = (ASN1Sequence) stream.readObject();
         }
 
-        return new BcX509ExtensionUtils()
-                .createSubjectKeyIdentifier(new SubjectPublicKeyInfo(seq));
+        return new BcX509ExtensionUtils().createSubjectKeyIdentifier(new SubjectPublicKeyInfo(seq));
     }
 
     /**
@@ -161,29 +157,25 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
      *            issuer for the certificate
      * @return a {@code Certificate} with the received data
      * @throws IOException
-     *             if there is an I/O or format problem with the certificate
-     *             data
+     *             if there is an I/O or format problem with the certificate data
      * @throws OperatorCreationException
      *             if there was a problem creation a bouncy castle operator
      * @throws CertificateException
-     *             if any of the certificates in the keystore could not be
-     *             loaded
+     *             if any of the certificates in the keystore could not be loaded
      * @throws InvalidKeyException
      *             if there was a problem with the key
      * @throws NoSuchAlgorithmException
-     *             if an algorithm required to create the key store could not be
-     *             found
+     *             if an algorithm required to create the key store could not be found
      * @throws NoSuchProviderException
      *             if a required provider is missing
      * @throws SignatureException
      *             if any problem occurs while signing the certificate
      */
-    private final Certificate getCertificate(final KeyPair keypair,
-            final String issuer) throws IOException, OperatorCreationException,
-            CertificateException, InvalidKeyException, NoSuchAlgorithmException,
-            NoSuchProviderException, SignatureException {
-        final X509v3CertificateBuilder builder; // Certificate builder
-        final X509Certificate certificate;      // Certificate
+    private final Certificate getCertificate(final KeyPair keypair, final String issuer)
+            throws IOException, OperatorCreationException, CertificateException, InvalidKeyException,
+            NoSuchAlgorithmException, NoSuchProviderException, SignatureException {
+        final X509v3CertificateBuilder builder;     // Certificate builder
+        final X509Certificate          certificate; // Certificate
 
         // Generates the certificate builder
         builder = getCertificateBuilder(keypair.getPublic(), issuer);
@@ -194,10 +186,9 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         // Verifies the certificate
         certificate.verify(keypair.getPublic());
 
-        LOGGER.debug("Created certificate of type {} with encoded value {}",
-                certificate.getType(), Arrays.asList(certificate.getEncoded()));
-        LOGGER.debug("Created certificate with public key:{}",
-                certificate.getPublicKey());
+        LOGGER.debug("Created certificate of type {} with encoded value {}", certificate.getType(),
+            Arrays.asList(certificate.getEncoded()));
+        LOGGER.debug("Created certificate with public key:{}", certificate.getPublicKey());
 
         return certificate;
     }
@@ -213,14 +204,14 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
      * @throws IOException
      *             if any format error occurrs while creating the certificate
      */
-    private final X509v3CertificateBuilder getCertificateBuilder(
-            final PublicKey publicKey, final String issuer) throws IOException {
-        final X500Name issuerName;              // Issuer name
-        final X500Name subjectName;             // Subject name
-        final BigInteger serial;                // Serial number
-        final X509v3CertificateBuilder builder; // Certificate builder
-        final KeyUsage usage;                   // Key usage
-        final ASN1EncodableVector purposes;     // Certificate purposes
+    private final X509v3CertificateBuilder getCertificateBuilder(final PublicKey publicKey, final String issuer)
+            throws IOException {
+        final X500Name                 issuerName;  // Issuer name
+        final X500Name                 subjectName; // Subject name
+        final BigInteger               serial;      // Serial number
+        final X509v3CertificateBuilder builder;     // Certificate builder
+        final KeyUsage                 usage;       // Key usage
+        final ASN1EncodableVector      purposes;    // Certificate purposes
 
         issuerName = new X500Name(issuer);
         subjectName = issuerName;
@@ -228,25 +219,20 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
 
         LOGGER.debug("Certificate for dates {} to {}", certStart, certEnd);
 
-        builder = new JcaX509v3CertificateBuilder(issuerName, serial, certStart,
-                certEnd, subjectName, publicKey);
+        builder = new JcaX509v3CertificateBuilder(issuerName, serial, certStart, certEnd, subjectName, publicKey);
 
-        builder.addExtension(Extension.subjectKeyIdentifier, false,
-                createSubjectKeyIdentifier(publicKey));
-        builder.addExtension(Extension.basicConstraints, true,
-                new BasicConstraints(true));
+        builder.addExtension(Extension.subjectKeyIdentifier, false, createSubjectKeyIdentifier(publicKey));
+        builder.addExtension(Extension.basicConstraints, true, new BasicConstraints(true));
 
-        usage = new KeyUsage(KeyUsage.keyCertSign | KeyUsage.digitalSignature
-                | KeyUsage.keyEncipherment | KeyUsage.dataEncipherment
-                | KeyUsage.cRLSign);
+        usage = new KeyUsage(KeyUsage.keyCertSign | KeyUsage.digitalSignature | KeyUsage.keyEncipherment
+                | KeyUsage.dataEncipherment | KeyUsage.cRLSign);
         builder.addExtension(Extension.keyUsage, false, usage);
 
         purposes = new ASN1EncodableVector();
         purposes.add(KeyPurposeId.id_kp_serverAuth);
         purposes.add(KeyPurposeId.id_kp_clientAuth);
         purposes.add(KeyPurposeId.anyExtendedKeyUsage);
-        builder.addExtension(Extension.extendedKeyUsage, false,
-                new DERSequence(purposes));
+        builder.addExtension(Extension.extendedKeyUsage, false, new DERSequence(purposes));
 
         return builder;
 
@@ -261,19 +247,21 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
      */
     private final KeyPair getKeyPair() throws NoSuchAlgorithmException {
         final KeyPairGenerator keyPairGenerator; // Key pair generator
-        final KeyPair keypair;                   // Key pair
+        final KeyPair          keypair;          // Key pair
 
         keyPairGenerator = KeyPairGenerator.getInstance("RSA");
         keyPairGenerator.initialize(1024, new SecureRandom());
 
         keypair = keyPairGenerator.generateKeyPair();
 
-        LOGGER.debug(
-                "Created key pair with private key {} {} and public key {} {}",
-                keypair.getPrivate().getAlgorithm(),
-                Arrays.asList(keypair.getPrivate().getEncoded()),
-                keypair.getPublic().getAlgorithm(),
-                Arrays.asList(keypair.getPublic().getEncoded()));
+        LOGGER.debug("Created key pair with private key {} {} and public key {} {}", keypair.getPrivate()
+            .getAlgorithm(),
+            Arrays.asList(keypair.getPrivate()
+                .getEncoded()),
+            keypair.getPublic()
+                .getAlgorithm(),
+            Arrays.asList(keypair.getPublic()
+                .getEncoded()));
 
         return keypair;
     }
@@ -284,7 +272,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
      * @return a date one hundred years in the future
      */
     private final Date getOneHundredYearsFutureDate() {
-        final Long msDay;       // Milliseconds in a day
+        final Long    msDay;    // Milliseconds in a day
         final Integer yearDays; // Days in a year
         final Integer years;    // Number of years
 
@@ -292,7 +280,7 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         yearDays = 365;
         years = 100;
 
-        return new Date(System.currentTimeMillis() + msDay * yearDays * years);
+        return new Date(System.currentTimeMillis() + (msDay * yearDays * years));
     }
 
     /**
@@ -301,13 +289,13 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
      * @return a date one year back
      */
     private final Date getOneYearBackDate() {
-        final Long msDay;       // Milliseconds in a day
+        final Long    msDay;    // Milliseconds in a day
         final Integer yearDays; // Days in a year
 
         msDay = 86400000L;
         yearDays = 365;
 
-        return new Date(System.currentTimeMillis() - msDay * yearDays);
+        return new Date(System.currentTimeMillis() - (msDay * yearDays));
     }
 
     /**
@@ -342,41 +330,34 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
      * @throws OperatorCreationException
      *             if there was a problem creation a bouncy castle operator
      * @throws CertificateException
-     *             if any of the certificates in the keystore could not be
-     *             loaded
+     *             if any of the certificates in the keystore could not be loaded
      */
-    private final X509Certificate getSignedCertificate(
-            final X509v3CertificateBuilder builder, final PrivateKey key)
+    private final X509Certificate getSignedCertificate(final X509v3CertificateBuilder builder, final PrivateKey key)
             throws OperatorCreationException, CertificateException {
-        final ContentSigner signer;   // Content signer
-        final String provider;        // Provider
-        final X509Certificate signed; // Signed certificate
+        final ContentSigner   signer;   // Content signer
+        final String          provider; // Provider
+        final X509Certificate signed;   // Signed certificate
 
         provider = BouncyCastleProvider.PROVIDER_NAME;
-        signer = new JcaContentSignerBuilder(getSignatureAlgorithm())
-                .setProvider(provider).build(key);
+        signer = new JcaContentSignerBuilder(getSignatureAlgorithm()).setProvider(provider)
+            .build(key);
 
         signed = new JcaX509CertificateConverter().setProvider(provider)
-                .getCertificate(builder.build(signer));
+            .getCertificate(builder.build(signer));
 
-        LOGGER.debug(
-                "Signed certificate with {} private key {}, using algorithm {}",
-                key.getAlgorithm(), Arrays.asList(key.getEncoded()),
-                key.getFormat());
+        LOGGER.debug("Signed certificate with {} private key {}, using algorithm {}", key.getAlgorithm(),
+            Arrays.asList(key.getEncoded()), key.getFormat());
 
         return signed;
     }
 
     @Override
-    protected final void addCertificate(final KeyStore kstore,
-            final String password, final String alias, final String issuer)
-            throws NoSuchAlgorithmException, NoSuchProviderException,
-            InvalidKeyException, OperatorCreationException,
-            CertificateException, IOException, KeyStoreException,
-            SignatureException {
-        final KeyPair keypair;          // Key pair for the certificate
-        final Certificate certificate;  // Generated certificate
-        final Certificate[] chain;      // Certificate chain
+    protected final void addCertificate(final KeyStore kstore, final String password, final String alias,
+            final String issuer) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException,
+            OperatorCreationException, CertificateException, IOException, KeyStoreException, SignatureException {
+        final KeyPair       keypair;     // Key pair for the certificate
+        final Certificate   certificate; // Generated certificate
+        final Certificate[] chain;       // Certificate chain
 
         // Creates a key pair
         keypair = getKeyPair();
@@ -388,49 +369,43 @@ public final class BouncyCastleKeyStoreFactory extends AbstractKeyStoreFactory {
         chain = new Certificate[] { certificate };
 
         // Sets the key data into the key store
-        kstore.setKeyEntry(alias, keypair.getPrivate(), password.toCharArray(),
-                chain);
+        kstore.setKeyEntry(alias, keypair.getPrivate(), password.toCharArray(), chain);
 
-        LOGGER.debug(
-                "Added certificate with alias {} and password {} for issuer {}",
-                alias, password, issuer);
+        LOGGER.debug("Added certificate with alias {} and password {} for issuer {}", alias, password, issuer);
     }
 
     @Override
-    protected final void addSecretKey(final KeyStore kstore, final String alias,
-            final String password) throws KeyStoreException {
-        final SecretKeyEntry secretKeyEntry;  // Secret key entry
-        final PasswordProtection keyPassword; // Secret key password protection
-        final SecretKey secretKey;            // Secret key password
-        final byte[] key;                     // Secret key as array
+    protected final void addSecretKey(final KeyStore kstore, final String alias, final String password)
+            throws KeyStoreException {
+        final SecretKeyEntry     secretKeyEntry; // Secret key entry
+        final PasswordProtection keyPassword;    // Secret key password protection
+        final SecretKey          secretKey;      // Secret key password
+        final byte[]             key;            // Secret key as array
 
         key = getPasswordArray(password);
         secretKey = new SecretKeySpec(key, secretKeyAlgorithm);
 
-        LOGGER.debug("Created secret key {} with format {}",
-                Arrays.asList(secretKey.getEncoded()), secretKey.getFormat());
+        LOGGER.debug("Created secret key {} with format {}", Arrays.asList(secretKey.getEncoded()),
+            secretKey.getFormat());
 
         secretKeyEntry = new SecretKeyEntry(secretKey);
         keyPassword = new PasswordProtection(password.toCharArray());
         kstore.setEntry(alias, secretKeyEntry, keyPassword);
 
-        LOGGER.debug("Added secret key with alias {} and password {}", alias,
-                password);
+        LOGGER.debug("Added secret key with alias {} and password {}", alias, password);
     }
 
     @Override
     protected final KeyStore getKeystore(final String password)
-            throws NoSuchAlgorithmException, CertificateException, IOException,
-            KeyStoreException {
+            throws NoSuchAlgorithmException, CertificateException, IOException, KeyStoreException {
         return getKeystore(password, KeyStore.getDefaultType());
     }
 
     @Override
-    protected final KeyStore getKeystore(final String password,
-            final String type) throws NoSuchAlgorithmException,
-            CertificateException, IOException, KeyStoreException {
+    protected final KeyStore getKeystore(final String password, final String type)
+            throws NoSuchAlgorithmException, CertificateException, IOException, KeyStoreException {
         final KeyStore kstore; // The returned key store
-        final char[] pass;     // The key store password
+        final char[]   pass;   // The key store password
 
         kstore = KeyStore.getInstance(type);
 

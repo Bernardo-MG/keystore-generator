@@ -25,7 +25,7 @@ import picocli.CommandLine;
 
 /**
  * Main executable class.
- * 
+ *
  * @author Bernardo Martínez Garrido
  *
  */
