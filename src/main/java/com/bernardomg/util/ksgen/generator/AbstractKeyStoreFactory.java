@@ -43,8 +43,8 @@ public abstract class AbstractKeyStoreFactory implements KeyStoreFactory {
     }
 
     @Override
-    public final KeyStore getJavaCryptographicExtensionKeyStore(
-            final String password, final String alias) throws Exception {
+    public final KeyStore getJavaCryptographicExtensionKeyStore(final String password, final String alias)
+            throws Exception {
         final KeyStore kstore; // Generated key store
 
         checkNotNull(password, "Received a null pointer as password");
@@ -57,8 +57,8 @@ public abstract class AbstractKeyStoreFactory implements KeyStoreFactory {
     }
 
     @Override
-    public final KeyStore getJavaKeyStore(final String password,
-            final String alias, final String issuer) throws Exception {
+    public final KeyStore getJavaKeyStore(final String password, final String alias, final String issuer)
+            throws Exception {
         final KeyStore kstore; // Generated key store
 
         checkNotNull(password, "Received a null pointer as password");
@@ -85,9 +85,8 @@ public abstract class AbstractKeyStoreFactory implements KeyStoreFactory {
      * @throws Exception
      *             if any problem occurs while creating the key store
      */
-    protected abstract void addCertificate(final KeyStore kstore,
-            final String password, final String alias, final String issuer)
-            throws Exception;
+    protected abstract void addCertificate(final KeyStore kstore, final String password, final String alias,
+            final String issuer) throws Exception;
 
     /**
      * Adds a secret key to the received key store.
@@ -101,8 +100,8 @@ public abstract class AbstractKeyStoreFactory implements KeyStoreFactory {
      * @throws Exception
      *             if any problem occurs while creating the key store
      */
-    protected abstract void addSecretKey(final KeyStore kstore,
-            final String alias, final String password) throws Exception;
+    protected abstract void addSecretKey(final KeyStore kstore, final String alias, final String password)
+            throws Exception;
 
     /**
      * Generates a default JKS key store.
@@ -113,8 +112,7 @@ public abstract class AbstractKeyStoreFactory implements KeyStoreFactory {
      * @throws Exception
      *             if any problem occurs while creating the key store
      */
-    protected abstract KeyStore getKeystore(final String password)
-            throws Exception;
+    protected abstract KeyStore getKeystore(final String password) throws Exception;
 
     /**
      * Generates a key store of the specified type.
@@ -127,7 +125,6 @@ public abstract class AbstractKeyStoreFactory implements KeyStoreFactory {
      * @throws Exception
      *             if any problem occurs while creating the key store
      */
-    protected abstract KeyStore getKeystore(final String password,
-            final String type) throws Exception;
+    protected abstract KeyStore getKeystore(final String password, final String type) throws Exception;
 
 }

@@ -35,24 +35,7 @@ import java.util.Date;
 public interface KeyStoreFactory {
 
     /**
-     * Sets the certificate start date.
-     *
-     * @param date
-     *            certificate start date
-     */
-    public void setCertStart(Date date);
-
-    /**
-     * Sets the certificate end date.
-     *
-     * @param date
-     *            certificate end date
-     */
-    public void setCertEnd(Date date);
-
-    /**
-     * Creates a Java Cryptographic Extension Key Store (JCEKS), which will
-     * include a secret key.
+     * Creates a Java Cryptographic Extension Key Store (JCEKS), which will include a secret key.
      *
      * @param password
      *            the password to be used on the key store
@@ -62,8 +45,7 @@ public interface KeyStoreFactory {
      * @throws Exception
      *             if any error occurs during the key store creation
      */
-    public KeyStore getJavaCryptographicExtensionKeyStore(final String password,
-            final String alias) throws Exception;
+    public KeyStore getJavaCryptographicExtensionKeyStore(final String password, final String alias) throws Exception;
 
     /**
      * Creates a Java Key Store (JKS), which will include a certificate.
@@ -78,7 +60,22 @@ public interface KeyStoreFactory {
      * @throws Exception
      *             if any error occurs during the key store creation
      */
-    public KeyStore getJavaKeyStore(final String password, final String alias,
-            final String issuer) throws Exception;
+    public KeyStore getJavaKeyStore(final String password, final String alias, final String issuer) throws Exception;
+
+    /**
+     * Sets the certificate end date.
+     *
+     * @param date
+     *            certificate end date
+     */
+    public void setCertEnd(Date date);
+
+    /**
+     * Sets the certificate start date.
+     *
+     * @param date
+     *            certificate start date
+     */
+    public void setCertStart(Date date);
 
 }

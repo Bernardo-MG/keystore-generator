@@ -24,15 +24,13 @@ import picocli.CommandLine.Command;
 
 /**
  * Key store generation menu.
- * 
+ *
  * @author Bernardo Martínez Garrido
  *
  */
 @Command(description = "Creates key stores",
-        subcommands = { KeyStoreGeneratorCommand.class,
-                SymmetricKeyStoreGeneratorCommand.class },
-        mixinStandardHelpOptions = true,
-        versionProvider = ManifestVersionProvider.class)
+        subcommands = { KeyStoreGeneratorCommand.class, SymmetricKeyStoreGeneratorCommand.class },
+        mixinStandardHelpOptions = true, versionProvider = ManifestVersionProvider.class)
 public class KeystoreMenu {
 
     /**
