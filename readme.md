@@ -67,8 +67,10 @@ mvn clean package
 Then run it like this:
 
 ```
-java -jar target/keygen.jar keystore keystore.jks 123456 alias "CN=www.bernardomg.com, O=bernardomg, OU=None, L=London, ST=England, C=UK"
+java -jar target/keygen.jar keystore keystore.jks [password] [alias] "CN=www.bernardomg.com, O=bernardomg, OU=None, L=London, ST=England, C=UK"
 ```
+
+With this a keystore.jks will appear in the folder where the command was executed.
 
 ## Collaborate
 
