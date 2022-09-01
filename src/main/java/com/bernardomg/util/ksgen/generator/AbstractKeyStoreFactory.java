@@ -24,9 +24,8 @@
 
 package com.bernardomg.util.ksgen.generator;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.security.KeyStore;
+import java.util.Objects;
 
 /**
  * Base factory for generating key stores.
@@ -47,8 +46,8 @@ public abstract class AbstractKeyStoreFactory implements KeyStoreFactory {
             throws Exception {
         final KeyStore kstore; // Generated key store
 
-        checkNotNull(password, "Received a null pointer as password");
-        checkNotNull(alias, "Received a null pointer as alias");
+        Objects.requireNonNullElse(password, "Received a null pointer as password");
+        Objects.requireNonNullElse(alias, "Received a null pointer as alias");
 
         kstore = getKeystore(password, "JCEKS");
         addSecretKey(kstore, alias, password);
@@ -61,9 +60,9 @@ public abstract class AbstractKeyStoreFactory implements KeyStoreFactory {
             throws Exception {
         final KeyStore kstore; // Generated key store
 
-        checkNotNull(password, "Received a null pointer as password");
-        checkNotNull(alias, "Received a null pointer as alias");
-        checkNotNull(issuer, "Received a null pointer as issuer");
+        Objects.requireNonNullElse(password, "Received a null pointer as password");
+        Objects.requireNonNullElse(alias, "Received a null pointer as alias");
+        Objects.requireNonNullElse(issuer, "Received a null pointer as issuer");
 
         kstore = getKeystore(password);
         addCertificate(kstore, password, alias, issuer);
